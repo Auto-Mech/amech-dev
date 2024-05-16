@@ -1,2 +1,4 @@
 # amech
-Install and run automech in developer mode
+
+This repository provides instructions for installing and running AutoMech from source,
+as a developer.
