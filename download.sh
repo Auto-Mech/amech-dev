@@ -1,10 +1,10 @@
 #!/bin/bash
 
 set -e  # if any command fails, quit
-
-# 0. First argument is the GitHub username. The second, optional, argument is the branch
-# of the Git repo, which defaults (for now) to `dev`.
+REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# 0. Read arguments: The GitHub username (required); The repo branch (default: dev)
 USERNAME=${1}
 BRANCH=${2:-dev}
 
@@ -20,7 +20,6 @@ read -p "Is this correct? If so, press enter to continue"
     cd ${SCRIPT_DIR}/src
 
     # 2. Loop through each repo and download it
-    REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
     for repo in ${REPOS[@]}
     do
         # a. Clone the repo
