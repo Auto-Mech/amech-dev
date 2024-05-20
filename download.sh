@@ -1,10 +1,16 @@
 #!/bin/bash
 
+# This script downloads each forked repo from the user's GitHub
+#
+# Arguments:
+#   - GitHub username (required)
+#   - Repo branch (default: dev)
+
 set -e  # if any command fails, quit
 REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-# 0. Read arguments: The GitHub username (required); The repo branch (default: dev)
+# 0. Read arguments
 USERNAME=${1}
 BRANCH=${2:-dev}
 

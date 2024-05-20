@@ -1,10 +1,19 @@
 #!/bin/bash
 
+# This script updates each repo against a remote
+#
+# Performs a pull --rebase followed by a push
+#
+# Arguments:
+#   - Remote to update against (default: upstream)
+#   - Branch to update (default: dev)
+#   - Flags to add to the push command, e.g. --force (default: none)
+
 set -e  # if any command fails, quit
 REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-# 0. Read argument: The branch to update (default: dev)
+# 0. Read arguments
 REMOTE=${1:-upstream}
 BRANCH=${2:-dev}
 FLAGS=${@:3}

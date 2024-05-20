@@ -1,10 +1,15 @@
 #!/bin/bash
 
+# This script runs a command inside each repo in src/
+#
+# Arguments:
+#   - Command to run (default: git status)
+
 set -e  # if any command fails, quit
 REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-# 0. Read argument: The command to run (default: git status)
+# 0. Read arguments
 COMMAND="${@:-git status}"
 
 # 1. If running something other than git status, confirm
