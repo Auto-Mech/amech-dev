@@ -36,9 +36,11 @@ read -p "Is this correct? If so, press enter to continue"
         (
             cd ${repo} && \
             git remote add upstream https://github.com/Auto-Mech/${repo} && \
-            git checkout -b ${BRANCH} && \
-            git pull --rebase upstream ${BRANCH} && \
-            git push -u origin ${BRANCH}
+	    git fetch origin ${BRANCH} && \
+	    git branch ${BRANCH} FETCH_HEAD && \
+	    git checkout ${BRANCH} && \
+	    git pull --rebase upstream ${BRANCH} && \
+            git push origin ${BRANCH}
         )
         printf "******\n"
     done
