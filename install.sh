@@ -20,7 +20,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
         printf "\n*** Installing in ${SCRIPT_DIR}/src/${repo} ***\n"
         (
             cd src/${repo} && \
-            pixi run pip install -e . --no-deps
+            pip install -e . --no-deps
         )
         printf "******\n"
     done

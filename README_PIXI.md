@@ -6,44 +6,31 @@ as a developer.
 If you are a brand new AutoMech developer, start by following the instructions at the
 very bottom to fork the AutoMech repositories.
 
-## Install AutoMech with Mamba
+## Installing AutoMech with Pixi
 
 The following instructions only need to be done once per machine.
 
-### Install Miniforge
+### Install Pixi
 
-If you haven't already, install Miniforge as follows.
-*Note:
-If your home directory has limited disk space, you will want to set the installation
-path to a directory with more space when prompted.  Also, if you have the `TMPDIR`
-environment variable set to a non-existent directory, you will need to run `mkdir
-$TMPDIR` first.*
+If you haven't already, install Pixi with the following command.
 ```
-wget "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"
-bash Miniforge3-$(uname)-$(uname -m).sh
-```
-If you don't wish to activate your conda base environment on startup, you can add the
-following aliases to your `~/.bashrc` for activating the `base` and `amech-deps` conda environments.
-(The latter will be created below.)
-```
-alias cab='. <path to conda installation>/bin/activate'
-alias caa='. <path to conda installation>/bin/activate amech-deps'
+curl -fsSL https://pixi.sh/install.sh | bash
 ```
 
 ### Install AutoMech in developer mode
 
 1. Clone this `amech-dev` repository wherever you want your AutoMech source code to
-live and enter its top-level directory.
+live.
 Unless you are a core developer, you can clone via HTTP from the main Auto-Mech repo.
 (Core developers should fork and clone via SSH, so that they can make changes to this repo as needed.)
 ```
 git clone https://github.com/Auto-Mech/amech-dev.git
-cd amech-dev/
 ```
 
-2. Create the `amech-deps` conda environment.
+2. Run Pixi's install command inside the top-level directory for this repository.
 ```
-mamba env create -f mamba.yml
+cd amech-dev/
+pixi install
 ```
 
 3. Run the download script to download the repositories and check out their `dev` branches. These will be placed in `src/`.
@@ -51,20 +38,19 @@ mamba env create -f mamba.yml
 ./download.sh
 ```
 
-4. Activate the `amech-deps` environment and run the install script to install each of
-the main AutoMech modules into it in edit mode.
+4. Run the install script to install each of the main AutoMech modules into your pixi
+environment in edit mode.
 ```
-caa # alias defined above, or `conda activate amech-deps`
 ./install.sh
 ```
 
-## Run AutoMech and Contribute to the Code
+## Running AutoMech and Making Changes
 
 ```
 pixi shell
 ```
 
-## New AutoMech Developers Start Here
+## First Steps for New Developers
 
 ### Fork repositories and add dev branches
 
