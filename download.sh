@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# This script downloads each forked repo from the user's GitHub
+# This script downloads each forked repo from the user's GitHub, checks out the dev
+# branch and updates it against the main Auto-Mech repo
 #
 # Arguments:
 #   - GitHub username (required)
@@ -36,10 +37,10 @@ read -p "Is this correct? If so, press enter to continue"
         (
             cd ${repo} && \
             git remote add upstream https://github.com/Auto-Mech/${repo} && \
-	    git fetch origin ${BRANCH} && \
-	    git branch ${BRANCH} FETCH_HEAD && \
-	    git checkout ${BRANCH} && \
-	    git pull --rebase upstream ${BRANCH} && \
+            git fetch origin ${BRANCH} && \
+            git branch ${BRANCH} FETCH_HEAD && \
+            git checkout ${BRANCH} && \
+            git pull --rebase upstream ${BRANCH} && \
             git push origin ${BRANCH}
         )
         printf "******\n"

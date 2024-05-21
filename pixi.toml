@@ -1,6 +1,6 @@
 [project]
-name = "amech"
-version = "0.1.0"
+name = "amech-dev"
+version = "2024.5.21"
 description = "Add a short description here"
 authors = ["Andreas Copan <avcopan@gmail.com>"]
 channels = ["conda-forge", "auto-mech"]
