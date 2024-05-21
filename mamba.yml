@@ -1,0 +1,32 @@
+name: amech-deps
+
+channels:
+    - auto-mech
+    - conda-forge
+
+dependencies:
+    - python
+    - pip
+    # AutoChem dependencies
+    - ipython
+    - ipywidgets
+    - more-itertools
+    - networkx
+    - numpy
+    - py3dmol
+    - pyparsing
+    - pytest
+    - pyyaml
+    - qcelemental
+    - rdkit
+    - scipy
+    - xarray
+    # Compiled AutoMech modules
+    - auto-mech::projrot
+    - auto-mech::pac99
+    - auto-mech::thermp
+    - auto-mech::mess-static
+    # # these packages need to be fixed:
+    # - auto-mech::nst
+    # - auto-mech::onedmin
+    # - auto-mech::varecof

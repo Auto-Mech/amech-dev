@@ -11,6 +11,7 @@ platforms = ["linux-64"]
 [dependencies]
 python = ">=3.12.3,<3.13"
 pip = ">=24.0,<25"
+# AutoChem dependencies
 ipython = ">=8.24.0,<8.25"
 ipywidgets = ">=8.1.2,<8.2"
 more-itertools = ">=10.2.0,<10.3"
@@ -24,6 +25,7 @@ qcelemental = ">=0.27.1,<0.28"
 rdkit = ">=2024.3.2,<2024.4"
 scipy = ">=1.13.0,<1.14"
 xarray = ">=2024.5.0,<2024.6"
+# Compiled AutoMech modules
 projrot = ">=1.7.2,<1.8"
 pac99 = ">=1.5.0,<1.6"
 thermp = ">=0.6.1,<0.7"
