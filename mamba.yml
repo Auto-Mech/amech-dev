@@ -14,6 +14,7 @@ dependencies:
     - networkx
     - numpy
     - py3dmol
+    - pylint
     - pyparsing
     - pytest
     - pyyaml

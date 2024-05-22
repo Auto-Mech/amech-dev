@@ -4,7 +4,7 @@
 # libraries in the environment path
 
 set -e  # if any command fails, quit
-REPOS=("autochem" "autoio")
+REPOS=("autochem" "autoio" "autofile")
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # 1. Enter the script directory and start the pixi shell
