@@ -1,4 +1,4 @@
-name: amech-deps
+name: amech-dev
 
 channels:
     - auto-mech
@@ -21,6 +21,8 @@ dependencies:
     - rdkit
     - scipy
     - xarray
+    # AutoIO dependencies
+    - mako
     # Compiled AutoMech modules
     - auto-mech::projrot
     - auto-mech::pac99

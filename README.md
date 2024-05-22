@@ -29,7 +29,7 @@ modules into `src/` and check out their `dev` branches.
 ./download.sh
 ```
 
-4. Activate the `amech-deps` environment as described in Appendix B and run the install
+4. Activate the `amech-dev` environment as described in Appendix B and run the install
 script to install each of the main AutoMech modules into it in edit mode.
 ```
 # activate your Pixi or Mamba environment, then run:
@@ -166,7 +166,7 @@ mamba env create -f mamba.yml
 *Step 3: Activate the environment.*
 Add the following line to your `~/.bashrc` for activating environments.
 ```
-alias caa='. <path to conda installation>/bin/activate amech-deps'
+alias caa='. <path to conda installation>/bin/activate amech-dev'
 ```
 Then either restart your session or run `source ~/.bashrc`.
 You will now be able to activate the environment using the alias `caa`.
