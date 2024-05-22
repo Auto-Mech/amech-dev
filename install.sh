@@ -2,12 +2,9 @@
 
 # This script runs an editable pip install inside each repo, placing their python
 # libraries in the environment path
-#
-# Arguments:
-#   - Command to run (default: git status)
 
 set -e  # if any command fails, quit
-REPOS=("autochem" "nonexistent")
+REPOS=("autochem" "autoio")
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # 1. Enter the script directory and start the pixi shell
