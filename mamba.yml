@@ -29,7 +29,7 @@ dependencies:
     - python-igraph
     - matplotlib
     # Compiled AutoMech modules
+    - auto-mech::automech-toolbox
     - auto-mech::pac99
     - auto-mech::projrot
-    - auto-mech::thermp
     - auto-mech::mess-static

@@ -14,6 +14,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/astroid-3.2.2-py312h7900ff3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/asttokens-2.4.1-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/attr-2.5.1-h166bdaf_1.tar.bz2
+      - conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.5.23-h4616a5c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/binutils_impl_linux-64-2.36.1-h193b22a_2.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/linux-64/binutils_linux-64-2.36-hf3e587d_33.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/linux-64/brotli-1.1.0-hd590300_1.conda
@@ -204,7 +205,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/stack_data-0.6.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/sysroot_linux-64-2.12-he073ed8_17.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/texttable-1.7.0-pyhd8ed1ab_0.conda
-      - conda: https://conda.anaconda.org/auto-mech/linux-64/thermp-0.6.1-0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h4845f30_101.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/toml-0.10.2-pyhd8ed1ab_0.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/tomli-2.0.1-pyhd8ed1ab_0.tar.bz2
@@ -368,6 +368,17 @@ packages:
   license_family: GPL
   size: 71042
   timestamp: 1660065501192
+- kind: conda
+  name: automech-toolbox
+  version: 2024.5.23
+  build: h4616a5c_0
+  subdir: noarch
+  noarch: generic
+  url: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.5.23-h4616a5c_0.conda
+  sha256: bd9c5db7216abed499aac0a6e969d37e8269fe5be2a66f35d3931319f5aca38a
+  md5: adc8789532a24b888926a896889356a4
+  size: 588390
+  timestamp: 1716494731403
 - kind: conda
   name: binutils_impl_linux-64
   version: 2.36.1
@@ -3653,17 +3664,6 @@ packages:
   license_family: LGPL
   size: 19891
   timestamp: 1696407701687
-- kind: conda
-  name: thermp
-  version: 0.6.1
-  build: '0'
-  subdir: linux-64
-  url: https://conda.anaconda.org/auto-mech/linux-64/thermp-0.6.1-0.tar.bz2
-  md5: 658dbe3c7a4f2b5e956991aec618ba0e
-  arch: x86_64
-  platform: linux
-  size: 19328
-  timestamp: 1668023832794
 - kind: conda
   name: tk
   version: 8.6.13
