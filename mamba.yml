@@ -24,12 +24,12 @@ dependencies:
     - xarray
     # AutoIO dependencies
     - mako
+    # AutoFile dependencies
+    # MechAnalyzer dependencies
+    - python-igraph
+    - matplotlib
     # Compiled AutoMech modules
-    - auto-mech::projrot
     - auto-mech::pac99
+    - auto-mech::projrot
     - auto-mech::thermp
     - auto-mech::mess-static
-    # # these packages need to be fixed:
-    # - auto-mech::nst
-    # - auto-mech::onedmin
-    # - auto-mech::varecof

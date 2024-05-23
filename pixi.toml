@@ -28,9 +28,13 @@ scipy = ">=1.13.0,<1.14"
 xarray = ">=2024.5.0,<2024.6"
 # AutoIO dependencies
 mako = ">=1.3.5,<1.4"
+# AutoFile dependencies
+# MechAnalyzer dependencies
+python-igraph = ">=0.11.5,<0.12"
+matplotlib = ">=3.8.4,<3.9"
 # Compiled AutoMech modules
-projrot = ">=1.7.2,<1.8"
 pac99 = ">=1.5.0,<1.6"
+projrot = ">=1.7.2,<1.8"
 thermp = ">=0.6.1,<0.7"
 mess-static = ">=2024.5.16,<2024.6"
 
