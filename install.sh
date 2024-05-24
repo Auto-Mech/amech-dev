@@ -14,7 +14,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
     # 2. Loop through each repo and execute the install command
     for repo in ${REPOS[@]}
     do
-        printf "\n*** Installing in ${SCRIPT_DIR}/src/${repo} ***\n"
+        printf "\n*** Installing ${SCRIPT_DIR}/src/${repo} ***\n"
         (
             cd src/${repo} && \
             pip install -e . --no-deps
