@@ -26,8 +26,9 @@ dependencies:
     - mako
     # AutoFile dependencies
     # MechAnalyzer dependencies
-    - python-igraph
+    - click
     - matplotlib
+    - python-igraph
     # Compiled AutoMech modules
     - auto-mech::automech-toolbox
     - auto-mech::mess-static
