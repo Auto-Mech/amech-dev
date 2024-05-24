@@ -40,8 +40,21 @@ script to install each of the main AutoMech modules into it in edit mode.
 
 Every time you start a new shell, you will need to activate your Pixi or Mamba
 environment as described in Appendix B.
+You will then be able to run the main AutoMech script as follows:
+```
+automech run
+```
 
-[Link to documentation for learning how to run here]
+The MechAnalyzer stereoexpansion script can be run as follows:
+```
+mechanalyzer expand
+```
+
+Each of these commands takes a `--help` flag to see the documentation (currently very
+limited).
+
+[Link to further documentation here when we can]
+
 
 ## Contribute
 
