@@ -40,10 +40,7 @@ script to install each of the main AutoMech modules into it in edit mode.
 
 Every time you start a new shell, you will need to activate your Pixi or Mamba
 environment as described in Appendix B.
-```
-pixi shell  # if using Pixi (in this directory)
-ca amech-dev  # if using Mamba
-```
+
 [Link to documentation for learning how to run here]
 
 ## Contribute
