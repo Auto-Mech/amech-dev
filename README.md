@@ -10,7 +10,7 @@ Appendix A to fork the AutoMech repositories.
 
 The following steps only need to be done once per machine.
 
-1. Fork this `amech-dev` repository on GitHub.
+1. If you haven't already, fork this `amech-dev` repository on GitHub.
 Then clone your forked repository wherever you want your AutoMech source code to live
 and `cd` into it before continuing.
 ```
@@ -37,10 +37,15 @@ the main AutoMech modules into it in edit mode.
 ```
 pixi shell  # activate the Pixi environment first!
 ./install.sh
-automech --help  # check that the installation worked
 ```
 
-5. Set the following environment variable in your `~/.bashrc` file to turn off Python
+5. Check that the installation worked by running the following help command.
+You should see some documentation for the AutoMech CLI.
+```
+automech --help
+```
+
+6. Set the following environment variable in your `~/.bashrc` file to turn off Python
 output buffering.
 ```
 export PYTHONUNBUFFERED=1
@@ -48,21 +53,16 @@ export PYTHONUNBUFFERED=1
 
 ## Run
 
-Every time you start a new shell, you will need to activate your Pixi environment using
-`pixi shell`.
-You will then be able to run the main AutoMech workflow as follows:
+To test that the code is operational, you can run the "simple" example provided in the
+MechDriver repository as follows.
 ```
+pixi shell  # activate the environment
+cd src/mechdriver/examples/simple/
 automech run &> out.log &
 ```
 Running `automech run --help` will allow you to see the options for this command.
 
-The MechAnalyzer stereoexpansion script can be run as follows:
-```
-mechanalyzer expand
-```
-
-Each of these commands takes a `--help` flag to see the documentation (currently very
-limited).
+To see available MechAnalyzer commands for things like stereoexpansion and sorting, run `mechanalyzer --help`.
 
 
 ## Contribute
