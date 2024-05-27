@@ -36,14 +36,21 @@ script to install each of the main AutoMech modules into it in edit mode.
 ./install.sh
 ```
 
+5. Set the following environment variable in your `~/.bashrc` file to turn off Python output buffering.
+Since our logs are currently based on the `print()` statement, they are buffered by default.
+```
+export PYTHONUNBUFFERED=1
+```
+
 ## Run
 
 Every time you start a new shell, you will need to activate your Pixi or Mamba
 environment as described in Appendix B.
 You will then be able to run the main AutoMech script as follows:
 ```
-automech run
+automech run &> out.log &
 ```
+Running `automech run --help` will allow you to see the command options.
 
 The MechAnalyzer stereoexpansion script can be run as follows:
 ```
