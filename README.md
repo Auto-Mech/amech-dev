@@ -19,7 +19,7 @@ Unless you are a core developer, you can clone via HTTP from the main Auto-Mech 
 (Core developers may wish to fork and clone via SSH so that they can make changes to
 this repo.)
 ```
-git clone https://github.com/Auto-Mech/amech-dev.git
+git clone https://github.com/<Auto-Mech or username for fork>/amech-dev.git
 cd amech-dev/
 ```
 
@@ -151,15 +151,15 @@ curl -fsSL https://pixi.sh/install.sh | bash
 ```
 
 *Step 2: Create the environment.*
-Enter this directory and run the following command.
+Enter this repository and run the following command.
 ```
-pixi install
+pixi install  # in amech-dev/
 ```
 
 *Step 3: Activate the environment.*
-Enter this directory and run the following command.
+Enter this repository and run the following command.
 ```
-pixi shell
+pixi shell  # in amech-dev/
 ```
 
 #### Option 2: Mamba
@@ -175,9 +175,9 @@ bash Miniforge3-$(uname)-$(uname -m).sh
 ```
 
 *Step 2: Create the environment.*
-Enter this directory and run the following command.
+Enter this repository and run the following command.
 ```
-mamba env create -f mamba.yml
+mamba env create -f mamba.yml  # in amech-dev/
 ```
 
 *Step 3: Activate the environment.*
