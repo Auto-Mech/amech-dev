@@ -62,6 +62,11 @@ automech run &> out.log &
 ```
 Running `automech run --help` will allow you to see the options for this command.
 
+To run from a different directory, you can do the following:
+```
+pixi run --manifest-path /path/to/amech-dev/pixi.toml automech run -p /path/to/job &> out.log &
+```
+
 To see available MechAnalyzer commands for things like stereoexpansion and sorting, run `mechanalyzer --help`.
 
 
