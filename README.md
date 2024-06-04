@@ -111,6 +111,20 @@ repository
 As always, small, frequent commits are preferable to large, infrequent ones.
 
 
+## Distribute
+
+You can build conda packages for each of the five AutoMech modules using the build
+script:
+```
+./build.sh
+```
+At the end, this script will print the appropriate command for you to upload these
+packages to Anaconda.org, which should look something like the following.
+```
+rattler-build upload anaconda -o Auto-Mech output/noarch/*.conda
+```
+
+
 ## Appendix A: New AutoMech Developers Start Here
 
 To get started as a new developer, follow these instructions to fork each repository and get its dev branch.
