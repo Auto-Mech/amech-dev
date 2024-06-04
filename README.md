@@ -62,6 +62,11 @@ automech run &> out.log &
 ```
 Running `automech run --help` will allow you to see the options for this command.
 
+To run from a different directory, you can do the following:
+```
+pixi run --manifest-path /path/to/amech-dev/pixi.toml automech run -p /path/to/job &> out.log &
+```
+
 To see available MechAnalyzer commands for things like stereoexpansion and sorting, run `mechanalyzer --help`.
 
 
@@ -104,6 +109,20 @@ repository
 11. On GitHub, submit a pull request with your changes.
 
 As always, small, frequent commits are preferable to large, infrequent ones.
+
+
+## Distribute
+
+You can build conda packages for each of the five AutoMech modules using the build
+script:
+```
+./build.sh
+```
+At the end, this script will print the appropriate command for you to upload these
+packages to Anaconda.org, which should look something like the following.
+```
+rattler-build upload anaconda -o Auto-Mech output/noarch/*.conda
+```
 
 
 ## Appendix A: New AutoMech Developers Start Here
