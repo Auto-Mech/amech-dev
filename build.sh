@@ -14,9 +14,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
     # 2. Run rattler-build for each repository
     for repo in ${REPOS[@]}
     do
-        printf "\n*** Building ${SCRIPT_DIR}/src/${repo} ***\n"
+        printf "\n*** Building ${SCRIPT_DIR}/src/${repo}/.recipe/ ***\n"
         (
-            rattler-build build -r src/${repo}/.
+            rattler-build build -r src/${repo}/.recipe/
         )
         printf "******\n"
     done
