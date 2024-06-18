@@ -4,7 +4,8 @@ This repository provides instructions for installing and running AutoMech from s
 as a developer.
 
 If you are a brand new AutoMech developer, start by following the instructions in
-Appendix A to fork the AutoMech repositories.
+[Appendix A](#appendix-a-new-automech-developers-start-here) to fork the AutoMech
+repositories.
 
 ## Install
 
@@ -24,9 +25,9 @@ modules into `src/` and check out their `dev` branches.
 ./download.sh
 ```
 
-3. If you haven't already, follow the instructions in Appendix B to install
-[Pixi](https://pixi.sh/latest/).
-This will be your package manager for AutoMech development.
+3. If you haven't already, follow the instructions in
+[Appendix B](#appendix-b-install-pixi-for-package-management) to install Pixi.  This
+will be your package manager for AutoMech development.
 Then run the following command to create the Pixi environment for this project.
 ```
 pixi install
@@ -127,22 +128,14 @@ rattler-build upload anaconda -o Auto-Mech output/noarch/*.conda
 
 ## Appendix A: New AutoMech Developers Start Here
 
-To get started as a new developer, follow these instructions to fork each repository and get its dev branch.
-
-*Step 1: Fork the repositories.*
-Log into GitHub and fork the following five repositories:
-
+To get started as a new developer, log into GitHub (or create an account) and follow
+[these instructions](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#forking-a-repository)
+to fork the following five repositories:
  - [AutoMech](https://github.com/Auto-Mech/autochem)
  - [AutoIO](https://github.com/Auto-Mech/autoio)
  - [AutoFile](https://github.com/Auto-Mech/autofile)
  - [MechAnalyzer](https://github.com/Auto-Mech/mechanalyzer)
  - [MechDriver](https://github.com/Auto-Mech/mechdriver)
-
-*Step 2: Add the `dev` branches to your forked repositories.*
-
-1. On the GitHub page for your fork, add `/branches` to the URL.
-2. Click the green button in the upper right that says "New branch".
-3. Set `dev` as the branch name and choose the `dev` branch from the main `Auto-Mech` repository as its source.
 
 
 ## Appendix B: Install Pixi for Package Management
