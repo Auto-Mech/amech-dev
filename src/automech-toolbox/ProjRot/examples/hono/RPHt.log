@@ -1,0 +1,15 @@
+using reduced mass:      1.000000
+frequency to animate:      2
+numrotors:      1
+STEP NUMBERread:      1
+STEP NUMBER:      0
+Step Number 0
+** using default distances to determine rotating moieties
+igroup A value for rot 0 natom 0 is 0  
+igroup A value for rot 0 natom 1 is 0  
+igroup A value for rot 0 natom 2 is 0  
+igroup A value for rot 0 natom 3 is 0  
+igroup B value for rot 0 natom 0 is 1  
+igroup B value for rot 0 natom 1 is 0  
+igroup B value for rot 0 natom 2 is 1  
+igroup B value for rot 0 natom 3 is 0  
