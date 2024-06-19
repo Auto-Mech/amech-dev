@@ -1,0 +1,14 @@
+ proj_rea_coo(0=yes(def),1=no)            1
+ numrotors                   3
+ pivotA                      8
+ pivotB                      3
+ atomsintopA                 3
+ topAatoms                  12          17          18
+ pivotA                     11
+ pivotB                      7
+ atomsintopA                 3
+ topAatoms                  14          15          16
+ pivotA                     12
+ pivotB                      8
+ atomsintopA                 2
+ topAatoms                  17          18

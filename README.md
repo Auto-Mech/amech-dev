@@ -114,14 +114,23 @@ As always, small, frequent commits are preferable to large, infrequent ones.
 
 ## Distribute
 
-You can build conda packages for each of the five AutoMech modules using the build
-script:
+You can build the AutoMech conda package as follows:
 ```
+./src/automech-toolbox/build.sh  # run first if a C/C++/Fortran code has changed
 ./build.sh
 ```
-At the end, this script will print the appropriate command for you to upload these
-packages to Anaconda.org, which should look something like the following.
+For the AutoMech-Toolbox codes, note that the MESS executables are not compiled from
+source.
+Instead, they are downloaded from
+[the MESS GitHub page](https://github.com/Auto-Mech/MESS/tree/master/static)
+and will need to be updated there if MESS has changed.
+
+At the end, the build script will print the appropriate command for you to upload the
+package to Anaconda.org, which should look something like the following.
+Note that you will need to set the `ANACONDA_API_KEY` environment variable with your API
+key from Anaconda.org.
 ```
+export ANACONDA_API_KEY=<API token>
 rattler-build upload anaconda -o Auto-Mech output/noarch/*.conda
 ```
 

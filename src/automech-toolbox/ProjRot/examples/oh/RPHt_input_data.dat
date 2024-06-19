@@ -1,0 +1,38 @@
+Number_of_Atoms:         2
+ Act_energy(kcal/mol):       0. 
+ Initial_Temperature:        200
+ Temperature_steps:          40
+ Temperature_increment:      50
+ Delta_Energy_rea:           0.
+ Delta_Energy_pro:           0.
+ Maxstep:                    1
+ Npointsint:                 5 
+ Maxtdev:                    0.5
+ Rearrange(1=yes,0=no)       1
+ SaddlePoint                 1
+ internalcoord(1=yes)     0
+ isct_vtst(1=vtst_sct,0=sct) 1
+ zerocurvature(1)            0
+ reduced_mass                1.0
+ minimum_frequency            50
+ anim_freq(if_Maxstep=1)       2
+ onlyrotors(0=yes,1=no)        0
+proj_rea_coo(0=yes(def),1=no)            1
+numrotors                   0
+Step 1 
+geometry 
+      1          8           0        0.000000    0.000000    0.000000
+      2          1           0        0.000000    0.000000    0.972000
+gradient
+      1        8          -0.000000000    0.000000000    0.000068108
+      2        1           0.000000000   -0.000000000   -0.000068108
+Hessian 
+                1             2             3             4             5 
+      1  0.729387E-03
+      2 -0.242749E-03 -0.267581E-03
+      3  0.000000E+00  0.000000E+00  0.509716E+00
+      4 -0.729387E-03  0.242749E-03  0.000000E+00  0.729387E-03
+      5  0.242749E-03  0.267581E-03  0.000000E+00 -0.242749E-03 -0.267581E-03
+      6  0.000000E+00  0.000000E+00 -0.509716E+00  0.000000E+00  0.000000E+00
+                6 
+      6  0.509716E+00

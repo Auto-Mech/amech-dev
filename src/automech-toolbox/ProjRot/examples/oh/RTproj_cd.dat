@@ -1,0 +1,19 @@
+ Entering Gaussian System, 
+                         Standard orientation:
+ ---------------------------------------------------------------------
+ Center     Atomic      Atomic             Coordinates (Angstroms)
+ Number     Number       Type             X           Y           Z
+ ---------------------------------------------------------------------
+      1          8           0        0.000000    0.000000    0.000000 
+      2          1           0        0.000000    0.000000    0.972000 
+ ---------------------------------------------------------------------
+
+    99 basis functions,   99 primitive gaussians,   9 cartesian basis functions
+    99 alpha electrons       99 beta electrons
+
+ **********************************************************************
+
+ Harmonic frequencies (cm**-1), IR intensities (KM/Mole), Raman scattering
+ activities (A**4/AMU), depolarization ratios for plane and unpolarized
+ incident light, reduced masses (AMU), force constants (mDyne/A),
+ and normal coordinates: 
