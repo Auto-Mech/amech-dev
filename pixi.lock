@@ -21,7 +21,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/async-lru-2.0.4-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/attr-2.5.1-h166bdaf_1.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/attrs-23.2.0-pyh71513ae_0.conda
-      - conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.5.24-h4616a5c_0.conda
+      - conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.6.19-h4616a5c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/babel-2.14.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/beautifulsoup4-4.12.3-pyha770c72_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/bleach-6.1.0-pyhd8ed1ab_0.conda
@@ -178,7 +178,6 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/matplotlib-base-3.8.4-py310hef631a5_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/matplotlib-inline-0.1.7-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mccabe-0.7.0-pyhd8ed1ab_0.tar.bz2
-      - conda: https://conda.anaconda.org/auto-mech/noarch/mess-static-2024.5.16-h4616a5c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/mistune-3.0.2-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/more-itertools-10.3.0-pyhd8ed1ab_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/mpg123-1.32.6-h59595ed_0.conda
@@ -568,15 +567,15 @@ packages:
   timestamp: 1704011393776
 - kind: conda
   name: automech-toolbox
-  version: 2024.5.24
+  version: 2024.6.19
   build: h4616a5c_0
   subdir: noarch
   noarch: generic
-  url: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.5.24-h4616a5c_0.conda
-  sha256: 049dcb5cac9366b50aab891001a38cdee880f1c6c2a3af38c7ff20be922a882e
-  md5: 2edb542d05065dd70be727f39f2c1c99
-  size: 904239
-  timestamp: 1716567480196
+  url: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.6.19-h4616a5c_0.conda
+  sha256: 2efe4793d418db23375e30105b96763cc40cc0487cee6afbbb59b64782dbc0f9
+  md5: f82a974f9eca1110e1a7738e269491ed
+  size: 23911454
+  timestamp: 1718827038203
 - kind: conda
   name: babel
   version: 2.14.0
@@ -3276,17 +3275,6 @@ packages:
   license_family: MIT
   size: 10909
   timestamp: 1643049714491
-- kind: conda
-  name: mess-static
-  version: 2024.5.16
-  build: h4616a5c_0
-  subdir: noarch
-  noarch: generic
-  url: https://conda.anaconda.org/auto-mech/noarch/mess-static-2024.5.16-h4616a5c_0.conda
-  sha256: be0bc4dae446ae684a6d3b8f9f034bfc4fd0d89eb01f747b0256b7116943509b
-  md5: b84ae07bd0a419953921a55dcf5fc108
-  size: 87341201
-  timestamp: 1715892590266
 - kind: conda
   name: mistune
   version: 3.0.2

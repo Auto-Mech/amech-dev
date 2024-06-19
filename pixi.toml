@@ -35,8 +35,7 @@ click = ">=8.1.7,<8.2"
 matplotlib = ">=3.8.4,<3.9"
 python-igraph = ">=0.11.5,<0.12"
 # Compiled AutoMech modules
-automech-toolbox = ">=2024.5.24,<2024.6"
-mess-static = ">=2024.5.16,<2024.6"
+automech-toolbox = ">=2024.6.19"
 
 [system-requirements]
 linux="3.10"
