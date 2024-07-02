@@ -140,7 +140,7 @@ rattler-build upload anaconda -o Auto-Mech output/noarch/*.conda
 To get started as a new developer, log into GitHub (or create an account) and follow
 [these instructions](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo#forking-a-repository)
 to fork the following five repositories:
- - [AutoMech](https://github.com/Auto-Mech/autochem)
+ - [AutoChem](https://github.com/Auto-Mech/autochem)
  - [AutoIO](https://github.com/Auto-Mech/autoio)
  - [AutoFile](https://github.com/Auto-Mech/autofile)
  - [MechAnalyzer](https://github.com/Auto-Mech/mechanalyzer)
