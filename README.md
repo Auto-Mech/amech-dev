@@ -19,14 +19,17 @@ git clone git@github.com:<username>/amech-dev.git
 cd amech-dev/
 ```
 
-2. Run the following script to clone the repositories for each of the five AutoMech
+2. If you haven't already, follow the instructions in
+[Appendix B](#appendix-b-connect-to-github-via-ssh) to set up SSH authentication with
+your GitHub account.
+Then run the following script to clone the repositories for each of the five AutoMech
 modules into `src/` and check out their `dev` branches.
 ```
 ./download.sh
 ```
 
 3. If you haven't already, follow the instructions in
-[Appendix B](#appendix-b-install-pixi-for-package-management) to install Pixi.  This
+[Appendix C](#appendix-c-install-pixi-for-package-management) to install Pixi.  This
 will be your package manager for AutoMech development.
 Then run the following command to create the Pixi environment for this project.
 ```
@@ -147,13 +150,31 @@ to fork the following five repositories:
  - [MechDriver](https://github.com/Auto-Mech/mechdriver)
 
 
-## Appendix B: Install Pixi for Package Management
+## Appendix B: Connect to GitHub via SSH
+
+To communicate with your forked GitHub repositories, you will need to generate an SSH
+key for your machine and add it to your GitHub account.
+This will allow you to push to your GitHub forks without a password.
+Follow these two steps to get set up:
+
+1. Follow
+[these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key)
+to generate a new SSH key, if you haven't already. (You can ignore the other
+instructions on the linked page.)
+2. Follow
+[these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account#adding-a-new-ssh-key-to-your-account)
+to add the new key to your GitHub account.
+
+## Appendix C: Install Pixi for Package Management
 
 This repository is set up to use Pixi for package management.
 You can install Pixi by running the following command:
 ```
 curl -fsSL https://pixi.sh/install.sh | bash
 ```
+This script will update your `~/.bash_profile` and you may need to restart your shell
+for the changes to take effect.
+
 The main Pixi commands to be aware of are as follows.
 - `pixi install`:
 Creates (or updates) an environment in a project directory using a `pixi.toml` file.
