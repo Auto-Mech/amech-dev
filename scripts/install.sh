@@ -5,16 +5,16 @@
 
 set -e  # if any command fails, quit
 REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+DIR=$( dirname -- $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd ))
 
 # 1. Enter the script directory and start the pixi shell
 (
-    cd ${SCRIPT_DIR}
+    cd ${DIR}
 
     # 2. Loop through each repo and execute the install command
     for repo in ${REPOS[@]}
     do
-        printf "\n*** Installing ${SCRIPT_DIR}/src/${repo} ***\n"
+        printf "\n*** Installing ${DIR}/src/${repo} ***\n"
         (
             cd src/${repo} && \
             pip install -e . --no-deps

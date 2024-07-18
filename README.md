@@ -20,32 +20,33 @@ cd amech-dev/
 ```
 
 2. If you haven't already, follow the instructions in
-[Appendix B](#appendix-b-connect-to-github-via-ssh) to set up SSH authentication with
-your GitHub account.
-Then run the following script to clone the repositories for each of the five AutoMech
-modules into `src/` and check out their `dev` branches.
-```
-./download.sh
-```
-
-3. If you haven't already, follow the instructions in
-[Appendix C](#appendix-c-install-pixi-for-package-management) to install Pixi.  This
+[Appendix B](#appendix-b-install-pixi-for-package-management) to install Pixi.  This
 will be your package manager for AutoMech development.
 Then run the following command to create the Pixi environment for this project.
 ```
 pixi install
 ```
 
-4. Activate the Pixi project environment and run the install script to install each of
-the main AutoMech modules into it in edit mode.
+3. If you haven't already, follow the instructions in
+[Appendix C](#appendix-c-connect-to-github-via-ssh) to set up SSH authentication with
+your GitHub account.
+Then run the following Pixi task to download the repositories for each of the five
+AutoMech modules into `src/` and check out their `dev` branches.
+(The bash script for this task is in `scripts/` and can be modified as needed.)
 ```
-pixi shell  # activate the Pixi environment first!
-./install.sh
+pixi run download
+```
+
+4. Run the following Pixi task install each of the main AutoMech modules into your Pixi
+environment in edit mode.
+```
+pixi run install
 ```
 
 5. Check that the installation worked by running the following help command.
 You should see some documentation for the AutoMech CLI.
 ```
+pixi shell  # activate the environment
 automech --help
 ```
 
@@ -84,13 +85,13 @@ This repository provides two helper scripts for interacting with these repositor
 Run the following script early (i.e. *before* you make changes) and often to stay in
 sync with other developers and avoid merge conflicts.[^1]
 ```
-./update.sh
+pixi run update
 ```
 
 *Script 2: Check for changes.*
 Run the following script to see which repositories you have changed.[^2]
 ```
-./status.sh
+pixi run status
 ```
 
 *Development workflow.*
@@ -98,10 +99,10 @@ Other commands, such as `git add` and `git commit`, should be run manually insid
 individual repositories.
 The recommended development workflow is as follows:
 
-1. `./update.sh` - update early and often
+1. `pixi run update` - update early and often
 2. Make changes to the code...
 3. Run the code to test your changes...
-4. `./status.sh` - see where you made changes
+4. `pixi run status` - see where you made changes
 5. `cd src/<repository directory>` - enter a repository with changes (do this for each one)
 6. `git add --patch` - answer the prompts to decide which changes to keep
 7. `git checkout .` - discard the remaining changes
@@ -119,8 +120,12 @@ As always, small, frequent commits are preferable to large, infrequent ones.
 
 You can build the AutoMech conda package as follows:
 ```
-./src/automech-toolbox/build.sh  # run first if a C/C++/Fortran code has changed
-./build.sh
+pixi run build
+```
+If one of the C/C++/Fortran codes in `src/automech-toolbox` needs to be updated, you
+would first run the following:
+```
+pixi run -e build build-toolbox
 ```
 For the AutoMech-Toolbox codes, note that the MESS executables are not compiled from
 source.
@@ -150,22 +155,7 @@ to fork the following five repositories:
  - [MechDriver](https://github.com/Auto-Mech/mechdriver)
 
 
-## Appendix B: Connect to GitHub via SSH
-
-To communicate with your forked GitHub repositories, you will need to generate an SSH
-key for your machine and add it to your GitHub account.
-This will allow you to push to your GitHub forks without a password.
-Follow these two steps to get set up:
-
-1. Follow
-[these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key)
-to generate a new SSH key, if you haven't already. (You can ignore the other
-instructions on the linked page.)
-2. Follow
-[these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account#adding-a-new-ssh-key-to-your-account)
-to add the new key to your GitHub account.
-
-## Appendix C: Install Pixi for Package Management
+## Appendix B: Install Pixi for Package Management
 
 This repository is set up to use Pixi for package management.
 You can install Pixi by running the following command:
@@ -191,6 +181,22 @@ request with these changes to the main amech-dev repository.
 Other developers will then be able to run `pixi install` again to update their environments.
 
 See [here](https://pixi.sh/latest/) for further Pixi documentation.
+
+
+## Appendix C: Connect to GitHub via SSH
+
+To communicate with your forked GitHub repositories, you will need to generate an SSH
+key for your machine and add it to your GitHub account.
+This will allow you to push to your GitHub forks without a password.
+Follow these two steps to get set up:
+
+1. Follow
+[these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#generating-a-new-ssh-key)
+to generate a new SSH key, if you haven't already. (You can ignore the other
+instructions on the linked page.)
+2. Follow
+[these instructions](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account#adding-a-new-ssh-key-to-your-account)
+to add the new key to your GitHub account.
 
 
 <!-- Footnotes: -->

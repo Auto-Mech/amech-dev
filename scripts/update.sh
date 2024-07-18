@@ -11,7 +11,7 @@
 
 set -e  # if any command fails, quit
 REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+DIR=$( dirname -- $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd ))
 
 # 0. Read arguments
 REMOTE=${1:-upstream}
@@ -27,9 +27,9 @@ read -p "Press enter to confirm "
 # 2. Loop through each repo and execute the command
 for repo in ${REPOS[@]}
 do
-    printf "\n*** Updating in ${SCRIPT_DIR}/src/${repo} ***\n"
+    printf "\n*** Updating in ${DIR}/src/${repo} ***\n"
     (
-        cd ${SCRIPT_DIR}/src/${repo} && \
+        cd ${DIR}/src/${repo} && \
         git checkout ${BRANCH} && \
         git pull --rebase ${REMOTE} ${BRANCH} && \
         git push ${FLAGS} origin ${BRANCH}
