@@ -56,3 +56,17 @@ sphinx = "*"
 myst-parser = "*"
 sphinx-book-theme = "*"
 sphinx-autodoc-typehints = "*"
+
+[feature.build.dependencies]
+cmake = ">=3.30.0,<3.31"
+cxx-compiler = ">=1.7.0,<1.8"
+fortran-compiler = ">=1.7.0,<1.8"
+c-compiler = ">=1.7.0,<1.8"
+make = ">=4.3,<5"
+rattler-build = ">=0.18.1,<0.19"
+libgfortran = ">=3.0.0,<3.1"
+libgcc = ">=7.2.0,<7.3"
+libstdcxx-ng = ">=14.1.0,<14.2"
+
+[environments]
+build = ["build"]
