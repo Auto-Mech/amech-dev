@@ -7,6 +7,11 @@ channels = ["conda-forge", "auto-mech"]
 platforms = ["linux-64"]
 
 [tasks]
+build = { cmd = "./build.sh", cwd = "scripts" }
+download = { cmd = "./download.sh", cwd = "scripts" }
+install = { cmd = "./install.sh", cwd = "scripts" }
+status = { cmd = "./status.sh", cwd = "scripts" }
+update = { cmd = "./update.sh", cwd = "scripts" }
 
 [dependencies]
 python = "3.10.*"
