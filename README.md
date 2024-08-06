@@ -11,11 +11,10 @@ repositories.
 
 The following steps only need to be done once per machine.
 
-1. If you haven't already, fork this `amech-dev` repository on GitHub.
-Then clone your forked repository wherever you want your AutoMech source code to live
-and `cd` into it before continuing.
+1. Clone this `amech-dev` repository wherever you want your AutoMech source code to live
+and `cd` into it before continuing.[^1]
 ```
-git clone git@github.com:<username>/amech-dev.git
+git clone https://github.com/Auto-Mech/amech-dev.git
 cd amech-dev/
 ```
 
@@ -83,13 +82,13 @@ This repository provides two helper scripts for interacting with these repositor
 
 *Script 1: Update.*
 Run the following script early (i.e. *before* you make changes) and often to stay in
-sync with other developers and avoid merge conflicts.[^1]
+sync with other developers and avoid merge conflicts.[^2]
 ```
 pixi run update
 ```
 
 *Script 2: Check for changes.*
-Run the following script to see which repositories you have changed.[^2]
+Run the following script to see which repositories you have changed.[^3]
 ```
 pixi run status
 ```
@@ -201,10 +200,18 @@ to add the new key to your GitHub account.
 
 <!-- Footnotes: -->
 
-[^1]: If syncing your own fork between different machines, you can specify the remote and
+[^1]: If changes are made to the `amech-dev` repository, you can update using
+`git pull origin main`.
+Developers who may want to contribute to this repository should follow the usual
+procedure to fork and clone, adding the central `Auto-Mech` repo as the `upstream`
+remote.
+In this case, you will update your `amech-dev` repository using
+`git pull --rebase upstream main && git push --force origin main`.
+
+[^2]: If syncing your own fork between different machines, you can specify the remote and
 branch to update against, i.e. `./update.sh origin dev` (the default is `upstream dev`).
 You can also add the `--force` flag to overwrite the history on your GitHub fork when it
 gets out of sync, i.e.  `./update.sh upstream dev --force`.
 
-[^2]: This script simply runs `git status` in each repository.
+[^3]: This script simply runs `git status` in each repository.
 If you want to run a different command, you can pass it as an argument, i.e. `./status.sh git branch -v` to see which branches are checked out.
