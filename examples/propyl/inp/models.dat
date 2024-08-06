@@ -37,13 +37,13 @@ spc global
     )
     vib = (
         mod = harm
-        geolvl = dft1
+        geolvl = dft2
         scale = on
     )
     tors = (
         mod = 1dhrf
-        enelvl = dft1
-        geolvl = dft1
+        enelvl = dft2
+        geolvl = dft2
         scale = on
     )
     symm = (
