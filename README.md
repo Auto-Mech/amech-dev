@@ -61,15 +61,16 @@ To test that the code is operational, you can run the "simple" example provided 
 MechDriver repository as follows.
 ```
 pixi shell  # activate the environment
-cd src/mechdriver/examples/simple/
+cd examples/quick/
 automech run &> out.log &
 ```
 Running `automech run --help` will allow you to see the options for this command.
 
-To run from a different directory, you can do the following:
+If you want to activate this Pixi environment from within a shell script, the best way to do that is with the following command:
 ```
-pixi run --manifest-path /path/to/amech-dev/pixi.toml automech run -p /path/to/job &> out.log &
+eval "$(pixi shell-hook --manifest-path /path/to/amech-dev/pixi.toml)"
 ```
+You will need to edit the path to point to wherever you cloned this repository.
 
 To see available MechAnalyzer commands for things like stereoexpansion and sorting, run `mechanalyzer --help`.
 
