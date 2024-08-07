@@ -15,12 +15,3 @@ level mp2
     mem = 16.0
     nprocs = 1
 end level
-
-level f12
-    method = mp2-f12d-ri
-    basis = cc-pvdz-f12
-    orb_res = RU
-    program = orca4
-    mem = 16.0
-    nprocs = 1
-end level
