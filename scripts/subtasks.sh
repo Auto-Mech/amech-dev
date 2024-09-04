@@ -48,9 +48,13 @@ SCRIPT="
     ${RUN_COMMAND}
 "
 
-ssh ${FIRST_NODE} /bin/env bash << EOF
+# Determine the user's working directory
+WD=${INIT_CWD:-$(pwd)}
+
+# Enter working directory and initiate job from the first SSH node
+cd ${WD} && ssh ${FIRST_NODE} /bin/env bash << EOF
     set -e
-    cd $(pwd)
+    cd ${WD}
     ${SCRIPT_HEADER}
     eval ${ACTIVATION_HOOK@Q}
     nohup sh -c ${SCRIPT@Q} > ${SUBTASK_LOG} 2>&1 &
