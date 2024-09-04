@@ -13,6 +13,7 @@ download = { cmd = "./scripts/download.sh", cwd = "." }
 install = { cmd = "./scripts/install.sh", cwd = "." }
 status = { cmd = "./scripts/status.sh", cwd = "." }
 update = { cmd = "./scripts/update.sh", cwd = "." }
+subtasks = { cmd = "./scripts/subtasks.sh", cwd = "." }
 
 [dependencies]
 python = "3.10.*"
@@ -39,7 +40,7 @@ matplotlib = ">=3.8.4,<3.9"
 python-igraph = ">=0.11.5,<0.12"
 # Compiled AutoMech modules
 automech-toolbox = ">=2024.6.19"
-parallel = ">=20240722,<20240723"
+parallel = ">=20240722"
 
 [system-requirements]
 linux="3.10"
