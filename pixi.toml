@@ -13,7 +13,8 @@ download = { cmd = "./scripts/download.sh", cwd = "." }
 install = { cmd = "./scripts/install.sh", cwd = "." }
 status = { cmd = "./scripts/status.sh", cwd = "." }
 update = { cmd = "./scripts/update.sh", cwd = "." }
-subtasks = { cmd = "./scripts/subtasks.sh", cwd = "." }
+subtasks = { cmd = "./scripts/subtasks.sh" }
+amech = { cmd = "./scripts/amech.sh" }
 
 [dependencies]
 python = "3.10.*"
