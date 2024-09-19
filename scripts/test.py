@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import shutil
+import subprocess
 from pathlib import Path
 
 import automech
@@ -27,7 +28,7 @@ def main():
     pass
 
 
-@main.command()
+@main.command("setup")
 def setup():
     """Set up the tests to run."""
     for test in TESTS:
@@ -49,12 +50,41 @@ def setup():
         automech.subtasks.setup(".", task_groups=("els",))
 
 
-@main.command()
-def run_data():
-    """Run to get electronic structure data."""
+@main.command("data")
+def data():
+    """Run electronic structure calculations."""
     for test in TESTS:
-        print(test.name)
-        print(test.nodes)
+        test_dir = TEST_DIR / test.name
+        subprocess.run(["pixi", "run", "subtasks", ",".join(test.nodes)], cwd=test_dir)
+
+
+@main.command("status")
+def status():
+    """Check the status of electronic structure calculations."""
+    for test in TESTS:
+        test_dir = TEST_DIR / test.name
+        os.chdir(test_dir)
+        automech.subtasks.status()
+
+
+@main.command("final")
+@click.option(
+    "-n",
+    "--nodes",
+    default=None,
+    show_default=True,
+    help="A comma-separated list of nodes",
+)
+def final(nodes: str | None = None):
+    """Run the final test after electronic structure calculations have completed."""
+    nodes = None if nodes is None else nodes.split(",")
+    for test in TESTS:
+        test_dir = TEST_DIR / test.name
+        os.chdir(test_dir)
+        if nodes:
+            subprocess.run(["pixi", "run", "amech", nodes[0]])
+        else:
+            subprocess.run(["automech", "run"], cwd=test_dir)
 
 
 if __name__ == "__main__":
