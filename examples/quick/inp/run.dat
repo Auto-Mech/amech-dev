@@ -1,7 +1,7 @@
 
 input
-    run_prefix = ./RUN
-    save_prefix = ./SAVE
+    run_prefix = ./run
+    save_prefix = ./save
 end input
 
 pes
@@ -9,7 +9,7 @@ pes
 end pes
 
 spc
-    5
+    1-5
 end spc
 
 els
