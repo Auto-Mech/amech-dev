@@ -68,23 +68,22 @@ def status():
 
 
 @main.command("final")
-@click.option(
-    "-n",
-    "--nodes",
-    default=None,
-    show_default=True,
-    help="A comma-separated list of nodes",
-)
-def final(nodes: str | None = None):
+def final():
     """Run the final test after electronic structure calculations have completed."""
-    nodes = None if nodes is None else nodes.split(",")
+    procs: list[tuple[subprocess.Popen, Path]] = []
     for test in TESTS:
+        print(f"Starting test {test.name}...")
         test_dir = TEST_DIR / test.name
-        os.chdir(test_dir)
-        if nodes:
-            subprocess.run(["pixi", "run", "amech", nodes[0]])
-        else:
-            subprocess.run(["automech", "run"], cwd=test_dir)
+        log_path = test_dir / "out.log"
+        log_file = log_path.open("w")
+        proc = subprocess.Popen(
+            ["automech", "run"], stdout=log_file, stderr=log_file, cwd=test_dir
+        )
+        procs.append((proc, log_path))
+
+    for (proc, log_path) in procs:
+        proc.wait()
+        print(log_path)
 
 
 if __name__ == "__main__":
