@@ -37,18 +37,18 @@ spc global
     )
     vib = (
         mod = harm
-        geolvl = dft2
+        geolvl = dft
         scale = on
     )
     tors = (
         mod = 1dhrf
-        enelvl = dft2
-        geolvl = dft2
+        enelvl = dft
+        geolvl = dft
         scale = on
     )
     symm = (
         mod = HCO_model
-        geolvl = dft1
+        geolvl = pm3
     )
     ts = (
         tunnel = eckart
