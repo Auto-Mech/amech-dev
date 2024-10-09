@@ -15,7 +15,7 @@ status = { cmd = "./scripts/status.sh", cwd = "." }
 update = { cmd = "./scripts/update.sh", cwd = "." }
 test = { cmd = "./scripts/test.py", cwd = "." }
 subtasks = { cmd = "./scripts/subtasks.sh" }
-amech = { cmd = "./scripts/amech.sh" }
+node = { cmd = "./scripts/node.sh" }
 
 [dependencies]
 python = "3.10.*"
