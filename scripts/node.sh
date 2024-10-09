@@ -7,21 +7,22 @@ WD=${INIT_CWD:-$(pwd)}
 # (Must be the first argument)
 NODE=${1}
 LOG=${2:-"out.log"}
+COMMAND=${3:-"automech run"}
 
 echo "Arguments:"
 echo "  NODE=${NODE}"
 echo "  LOG=${LOG}"
+echo "  COMMAND=${COMMAND}"
 
 ACTIVATION_HOOK="$(pixi shell-hook)"
-RUN_COMMAND="automech run"
 SCRIPT_HEADER='
     echo Running on $(hostname) in $(pwd)
     echo Process ID: $$
 '
 SCRIPT="
     ${SCRIPT_HEADER}
-    echo Run command: ${RUN_COMMAND}
-    ${RUN_COMMAND}
+    echo Run command: ${COMMAND}
+    ${COMMAND}
 "
 
 # Enter working directory and initiate job from the first SSH node
