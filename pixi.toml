@@ -16,6 +16,7 @@ update = { cmd = "./scripts/update.sh", cwd = "." }
 test = { cmd = "./scripts/test.py", cwd = "." }
 subtasks = { cmd = "./scripts/subtasks.sh" }
 node = { cmd = "./scripts/node.sh" }
+x2z = { cmd = "./scripts/x2z.py" }
 
 [dependencies]
 python = "3.10.*"
