@@ -58,7 +58,7 @@ def els(nodes: str):
     """
     for test in TESTS:
         test_dir = TEST_DIR / test.name
-        subprocess.run(["pixi", "run", "subtasks", nodes], cwd=test_dir)
+        subprocess.run(["pixi", "run", "subtasks", "-z", nodes], cwd=test_dir)
 
 
 @main.command("status")
@@ -80,12 +80,12 @@ def final():
         test_dir = TEST_DIR / test.name
         log_path = test_dir / "out.log"
         log_file = log_path.open("w")
-        proc = subprocess.Popen(
-            ["automech", "run"], stdout=log_file, stderr=log_file, cwd=test_dir
-        )
+        os.chdir(test_dir)
+        automech.subtasks.untar_save_directory()
+        proc = subprocess.Popen(["automech", "run"], stdout=log_file, stderr=log_file)
         procs.append((proc, log_path))
 
-    for (proc, log_path) in procs:
+    for proc, log_path in procs:
         proc.wait()
         print(log_path)
 
