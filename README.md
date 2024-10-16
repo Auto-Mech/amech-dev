@@ -74,6 +74,19 @@ You will need to edit the path to point to wherever you cloned this repository.
 
 To see available MechAnalyzer commands for things like stereoexpansion and sorting, run `mechanalyzer --help`.
 
+### Run on a node
+
+To run AutoMech (or another command) on a node to which you have SSH access, you can use the following Pixi task:
+```
+pixi run node <node> <log file> <command>
+```
+If unspecified, the default command is "automech run" and the default log file is "out.log".
+
+Examples:
+```
+pixi run node csed-0001  			   	# run AutoMech
+pixi run node csed-0001 out.log "g16 run.inp run.out"  	# run Gaussian
+```
 
 ## Contribute
 
