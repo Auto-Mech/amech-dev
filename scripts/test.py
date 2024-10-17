@@ -14,8 +14,8 @@ class TestConfig(BaseModel):
     name: str
 
 
-TEST_DIR = Path("tests").resolve()
-EXAMPLE_DIR = Path("examples").resolve()
+EXAMPLE_DIR = Path("src/mechdriver/examples").resolve()
+TEST_DIR = Path("src/mechdriver/tests").resolve()
 TESTS = [
     TestConfig(**c) for c in yaml.safe_load((TEST_DIR / "config.yaml").read_text())
 ]

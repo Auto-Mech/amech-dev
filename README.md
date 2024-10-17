@@ -61,7 +61,7 @@ To test that the code is operational, you can run the "simple" example provided 
 MechDriver repository as follows.
 ```
 pixi shell  # activate the environment
-cd examples/quick/
+cd src/mechdriver/examples/quick/
 automech run &> out.log &
 ```
 Running `automech run --help` will allow you to see the options for this command.
@@ -87,6 +87,29 @@ Examples:
 pixi run node csed-0001  			   	# run AutoMech
 pixi run node csed-0001 out.log "g16 run.inp run.out"  	# run Gaussian
 ```
+
+## Test
+
+### Step 1: Generate Electronic Structure Data
+
+The data generated here is compressed and stored in the MechDriver repository to be used
+on step 2.
+```
+pixi run test setup       # create clean run directories
+pixi run test els <node>  # run data generation on a node, e.g. csed-0005
+pixi run test status      # check data generation progress
+```
+
+### Step 2: Run End-to-end Workflow with Existing Electronic Structure Data
+
+This step uses the data from step 1 to run an end-to-end workflow with the code.
+```
+pytest -v src/mechdriver/tests/
+```
+Although this works with old data, step 1 should be regularly re-run to catch any bugs
+related to electronic structure data generation.
+This is currently an honor system.
+
 
 ## Contribute
 
