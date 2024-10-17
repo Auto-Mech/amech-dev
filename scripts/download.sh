@@ -13,14 +13,33 @@ DIR=$( dirname -- $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null &&
 
 # 0. Read arguments
 USERNAME=${1}
-BRANCH=${2:-dev}
+UPSTREAM=${2}
+MODE=${3}
+BRANCH=${4:-dev}
 
 if [ -z "${1}" ]; then
     read -p "Please enter your GitHub username: " USERNAME
 fi
+if [ -z "${2}" ]; then
+    read -p "Update against Auto-Mech upstream? (yes or no): " UPSTREAM
+    UPSTREAM=${UPSTREAM:-true}
+fi
+if [ -z "${3}" ]; then
+    read -p "How would you like to clone? (ssh or http): " MODE
+    MODE=${MODE:-ssh}
+fi
 
-echo "GitHub username: '${USERNAME}' | Branch to check out: '${BRANCH}'"
+echo "Arguments:"
+echo "  Username - ${USERNAME}"
+echo "  Update   - ${UPSTREAM}"
+echo "  Mode     - ${MODE}"
+echo "  Branch   - ${BRANCH}"
 read -p "Is this correct? If so, press enter to continue"
+
+CLONE_PREFIX="https://github.com/${USERNAME}"
+if [ "${MODE}" == "ssh" ]; then
+    CLONE_PREFIX="git@github.com:${USERNAME}"
+fi
 
 # 1. Enter the source directory
 (
@@ -30,26 +49,28 @@ read -p "Is this correct? If so, press enter to continue"
     for repo in ${REPOS[@]}
     do
         # a. Clone the repo
-        printf "\n*** Cloning from git@github.com:${USERNAME}/${repo}.git ***\n"
-        git clone git@github.com:${USERNAME}/${repo}.git
+        printf "\n*** Cloning from ${CLONE_PREFIX}/${repo}.git ***\n"
+        git clone ${CLONE_PREFIX}/${repo}.git
         # b. If it worked, enter the repo, add Auto-Mech as a remote, and add the branch
         # both locally and on GitHub
-        (
-            # i. Enter the repository
-            cd ${repo}
-            # ii. If the desired branch isn't the default one, fetch it from origin and
-            # switch to it
-            branch=$( git branch | tr -d [*] | xargs )
-            if [[ ${branch} != ${BRANCH} ]]; then
-                git fetch origin ${BRANCH} && \
-                git branch ${BRANCH} FETCH_HEAD && \
-                git checkout ${BRANCH}
-            fi
-            # iii. Rebase the selected branch against upstream
-            git remote add upstream https://github.com/Auto-Mech/${repo} && \
-            git pull --rebase upstream ${BRANCH} && \
-            git push origin ${BRANCH}
-        )
+        if [ "${UPSTREAM}" == "yes" ]; then
+            (
+                # i. Enter the repository
+                cd ${repo}
+                # ii. If the desired branch isn't the default one, fetch it from origin and
+                # switch to it
+                branch=$( git branch | tr -d [*] | xargs )
+                if [[ ${branch} != ${BRANCH} ]]; then
+                    git fetch origin ${BRANCH} && \
+                    git branch ${BRANCH} FETCH_HEAD && \
+                    git checkout ${BRANCH}
+                fi
+                # iii. Rebase the selected branch against upstream
+                git remote add upstream https://github.com/Auto-Mech/${repo} && \
+                git pull --rebase upstream ${BRANCH} && \
+                git push origin ${BRANCH}
+            )
+        fi
         printf "******\n"
     done
 )

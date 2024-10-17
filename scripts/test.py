@@ -12,7 +12,6 @@ from pydantic import BaseModel
 
 class TestConfig(BaseModel):
     name: str
-    nodes: list[str]
 
 
 TEST_DIR = Path("tests").resolve()
@@ -50,12 +49,16 @@ def setup():
         automech.subtasks.setup(".", task_groups=("els",))
 
 
-@main.command("data")
-def data():
-    """Run electronic structure calculations."""
+@main.command("els")
+@click.argument("nodes")
+def els(nodes: str):
+    """Run electronic structure calculations.
+
+    :param nodes: A comma-separted list of nodes
+    """
     for test in TESTS:
         test_dir = TEST_DIR / test.name
-        subprocess.run(["pixi", "run", "subtasks", ",".join(test.nodes)], cwd=test_dir)
+        subprocess.run(["pixi", "run", "subtasks", "-t", nodes], cwd=test_dir)
 
 
 @main.command("status")
@@ -63,27 +66,9 @@ def status():
     """Check the status of electronic structure calculations."""
     for test in TESTS:
         test_dir = TEST_DIR / test.name
+        print(f"Checking status in {test_dir}...")
         os.chdir(test_dir)
         automech.subtasks.status()
-
-
-@main.command("final")
-def final():
-    """Run the final test after electronic structure calculations have completed."""
-    procs: list[tuple[subprocess.Popen, Path]] = []
-    for test in TESTS:
-        print(f"Starting test {test.name}...")
-        test_dir = TEST_DIR / test.name
-        log_path = test_dir / "out.log"
-        log_file = log_path.open("w")
-        proc = subprocess.Popen(
-            ["automech", "run"], stdout=log_file, stderr=log_file, cwd=test_dir
-        )
-        procs.append((proc, log_path))
-
-    for (proc, log_path) in procs:
-        proc.wait()
-        print(log_path)
 
 
 if __name__ == "__main__":

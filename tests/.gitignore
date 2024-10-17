@@ -1,4 +1,4 @@
-*
-!.gitignore
-!config.yaml
-!quick/inp/
+**/*.log
+**/run
+**/save
+**/subtasks
