@@ -58,7 +58,7 @@ def els(nodes: str):
     """
     for test in TESTS:
         test_dir = TEST_DIR / test.name
-        subprocess.run(["pixi", "run", "subtasks", "-z", nodes], cwd=test_dir)
+        subprocess.run(["pixi", "run", "subtasks", "-t", nodes], cwd=test_dir)
 
 
 @main.command("status")

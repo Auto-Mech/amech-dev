@@ -38,7 +38,7 @@ def test_workflow(name: str):
     os.chdir(test_dir)
 
     with contextlib.redirect_stdout(Logger("out.log")):
-        automech.subtasks.untar_save_directory()
+        automech.subtasks.untar_subtask_data()
         automech.run()
 
 
