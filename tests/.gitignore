@@ -1,4 +1,6 @@
 *
 !.gitignore
+!*.py
+!*.tgz
 !config.yaml
-!quick/inp/
+!**/inp/

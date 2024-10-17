@@ -71,24 +71,5 @@ def status():
         automech.subtasks.status()
 
 
-@main.command("final")
-def final():
-    """Run the final test after electronic structure calculations have completed."""
-    procs: list[tuple[subprocess.Popen, Path]] = []
-    for test in TESTS:
-        print(f"Starting test {test.name}...")
-        test_dir = TEST_DIR / test.name
-        log_path = test_dir / "out.log"
-        log_file = log_path.open("w")
-        os.chdir(test_dir)
-        automech.subtasks.untar_save_directory()
-        proc = subprocess.Popen(["automech", "run"], stdout=log_file, stderr=log_file)
-        procs.append((proc, log_path))
-
-    for proc, log_path in procs:
-        proc.wait()
-        print(log_path)
-
-
 if __name__ == "__main__":
     main()
