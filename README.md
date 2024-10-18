@@ -127,7 +127,7 @@ pixi run update
 *Script 2: Check for changes.*
 Run the following script to see which repositories you have changed.[^3]
 ```
-pixi run status
+pixi run git status
 ```
 
 *Development workflow.*
@@ -138,7 +138,7 @@ The recommended development workflow is as follows:
 1. `pixi run update` - update early and often
 2. Make changes to the code...
 3. Run the code to test your changes...
-4. `pixi run status` - see where you made changes
+4. `pixi run git status` - see where you made changes
 5. `cd src/<repository directory>` - enter a repository with changes (do this for each one)
 6. `git add --patch` - answer the prompts to decide which changes to keep
 7. `git checkout .` - discard the remaining changes
@@ -246,9 +246,9 @@ In this case, you will update your `amech-dev` repository using
 `git pull --rebase upstream main && git push --force origin main`.
 
 [^2]: If syncing your own fork between different machines, you can specify the remote and
-branch to update against, i.e. `./update.sh origin dev` (the default is `upstream dev`).
+branch to update against, i.e. `pixi run update origin dev` (the default is `upstream dev`).
 You can also add the `--force` flag to overwrite the history on your GitHub fork when it
-gets out of sync, i.e.  `./update.sh upstream dev --force`.
+gets out of sync, i.e.  `pixi run update upstream dev --force`.
 
 [^3]: This script simply runs `git status` in each repository.
-If you want to run a different command, you can pass it as an argument, i.e. `./status.sh git branch -v` to see which branches are checked out.
+If you want to run a different command, you can pass it as an argument, i.e. `pixi run git branch -v` to see which branches are checked out.
