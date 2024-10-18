@@ -11,8 +11,8 @@ build = { cmd = "./scripts/build.sh", cwd = "." }
 build-toolbox = { cmd = "./src/automech-toolbox/build.sh", cwd = "." }
 download = { cmd = "./scripts/download.sh", cwd = "." }
 install = { cmd = "./scripts/install.sh", cwd = "." }
-status = { cmd = "./scripts/status.sh", cwd = "." }
 update = { cmd = "./scripts/update.sh", cwd = "." }
+git = { cmd = "./scripts/git.sh", cwd = "." }
 test = { cmd = "./scripts/test.py", cwd = "." }
 subtasks = { cmd = "./scripts/subtasks.sh" }
 node = { cmd = "./scripts/node.sh" }
