@@ -13,7 +13,7 @@ DIR=$( dirname -- $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null &&
 COMMAND="${@:-status}"
 
 # 1. If running something other than git status, confirm
-if [[ "${COMMAND}" != "git status" ]]; then
+if [[ "${COMMAND}" != "status" ]]; then
     read -p "Execute 'git ${COMMAND}' in each repository? Press enter to confirm "
 fi
 

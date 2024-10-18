@@ -20,12 +20,13 @@ BRANCH=${4:-dev}
 if [ -z "${1}" ]; then
     read -p "Please enter your GitHub username: " USERNAME
 fi
+echo "Next, press enter to choose the default values, unless you know what you are doing..."
 if [ -z "${2}" ]; then
-    read -p "Update against Auto-Mech upstream? (yes or no): " UPSTREAM
-    UPSTREAM=${UPSTREAM:-true}
+    read -p "  Update against Auto-Mech upstream? (yes [default] or no): " UPSTREAM
+    UPSTREAM=${UPSTREAM:-yes}
 fi
 if [ -z "${3}" ]; then
-    read -p "How would you like to clone? (ssh or http): " MODE
+    read -p "  How would you like to clone? (ssh [default] or http): " MODE
     MODE=${MODE:-ssh}
 fi
 
