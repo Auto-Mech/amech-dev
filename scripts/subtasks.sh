@@ -8,17 +8,19 @@
 # All options and flags are passed along to the subtask runner.
 
 SUBTASK_LOG="sub.log"
+ARG_OFFSET=1
 while getopts ":o:" opt; do
   case $opt in
     o)
       SUBTASK_LOG=$OPTARG
+      ARG_OFFSET=$((ARG_OFFSET+2))
       ;;
   esac
 done
 
 cd ${INIT_CWD:-$(pwd)}
 
-COMMAND="automech subtasks run $@"
+COMMAND="automech subtasks run ${@:ARG_OFFSET}"
 
 # echo pixi run node ${@: -1} ${SUBTASK_LOG} ${COMMAND@Q}
 pixi run node ${@: -1} ${SUBTASK_LOG} ${COMMAND@Q}
