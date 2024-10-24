@@ -2,6 +2,7 @@
 import os
 import shutil
 import subprocess
+import warnings
 from pathlib import Path
 
 import automech
@@ -60,6 +61,7 @@ def setup():
         os.chdir(test_dir)
         automech.subtasks.setup(".", task_groups=("els",))
 
+    # Works, but not yet integrated:
     setup_repo_info = repos_current_version()
     print(f"\nWriting setup repo information to {SETUP_REPO_INFO_FILE}")
     SETUP_REPO_INFO_FILE.write_text(yaml.safe_dump(dict(setup_repo_info)))
@@ -72,6 +74,11 @@ def els(nodes: str):
 
     :param nodes: A comma-separted list of nodes
     """
+    # Distributing multiple tests across a list of nodes is not yet set up
+    # Currently, it just runs the one test on all of the given nodes
+    if len(TESTS) > 1:
+        raise NotImplementedError("Not yet set up for multiple tests")
+
     for test in TESTS:
         test_dir = TEST_DIR / test.name
         subprocess.run(["pixi", "run", "subtasks", "-t", nodes], cwd=test_dir)
@@ -102,7 +109,7 @@ def repos_current_version() -> RepoInfo:
 
     :return: One-line summaries of most recent commits
     """
-    repos_assert_no_uncommitted_python_changes()
+    repos_warn_about_uncommitted_python_changes()
     version_dct = repos_output(["git", "log", "--oneline", "-n", "1"])
     return RepoInfo(**version_dct)
 
@@ -114,22 +121,26 @@ def repos_version_diff(repo_info: RepoInfo) -> RepoInfo:
     :param repo_info: The repository information to compare to
     :return: One-line summaries of each commit since the one given
     """
-    repos_assert_no_uncommitted_python_changes()
+    repos_warn_about_uncommitted_python_changes()
     command_dct = {
         k: [f"{commit_hash_from_line(v)}..HEAD"] for k, v in dict(repo_info).items()
     }
-    diff_dct: dict[str, str] = repos_output(
-        ["git", "log", "--oneline"], command_dct=command_dct
-    )
+    diff_dct = repos_output(["git", "log", "--oneline"], command_dct=command_dct)
     diff_dct = {k: v.splitlines() for k, v in diff_dct.items()}
     return RepoInfo(**diff_dct)
 
 
-def repos_assert_no_uncommitted_python_changes() -> None:
+def repos_warn_about_uncommitted_python_changes() -> None:
     """Assert that there are no uncommited Python changes in any repo"""
     status_dct = repos_output(["git", "status", "-s", "*.py"])
     for repo, status in status_dct.items():
-        assert not status, f"{repo} has uncommitted Python changes"
+        if status:
+            color_start = "\033[93m"
+            color_end = "\033[0m"
+            warnings.formatwarning = (
+                lambda m, c, *_: f"{color_start}{c.__name__}{color_end}: {m}"
+            )
+            warnings.warn(f"{repo} has uncommitted Python changes:\n{status}\n")
 
 
 def commit_hash_from_line(line: str) -> str:
@@ -143,7 +154,7 @@ def commit_hash_from_line(line: str) -> str:
 
 def repos_output(
     command: list[str], command_dct: dict[str, list[str]] | None = None
-) -> RepoInfo:
+) -> dict[str, str]:
     """Get output from a command in each repo
 
     :param command: A command to run for each repo
