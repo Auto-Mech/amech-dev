@@ -40,9 +40,18 @@ def main():
     pass
 
 
-@main.command("setup")
-def setup():
-    """Set up the tests to run."""
+@main.command("local")
+@click.argument("nodes")
+def local(nodes: str):
+    """Run local tests on one or more nodes.
+
+    :param nodes: A comma-separted list of nodes
+    """
+    check_for_uncommited_python_changes(throw_error=True)
+
+    assert len(TESTS) == 1, "Not yet ready for more than one test."
+
+    # 1. Set up the directories and split into subtasks
     for test in TESTS:
         # Remove the test directory, if it exists
         test_dir = TEST_DIR / test.name
@@ -59,29 +68,17 @@ def setup():
         # Create the subtasks
         print(f"Setting up subtasks in {test_dir}")
         os.chdir(test_dir)
-        automech.subtasks.setup(".", task_groups=("els",))
+        automech.subtasks.setup(".")
 
-    # Works, but not yet integrated:
-    setup_repo_info = repos_current_version()
-    print(f"\nWriting setup repo information to {SETUP_REPO_INFO_FILE}")
-    SETUP_REPO_INFO_FILE.write_text(yaml.safe_dump(dict(setup_repo_info)))
-
-
-@main.command("els")
-@click.argument("nodes")
-def els(nodes: str):
-    """Run electronic structure calculations.
-
-    :param nodes: A comma-separted list of nodes
-    """
-    # Distributing multiple tests across a list of nodes is not yet set up
-    # Currently, it just runs the one test on all of the given nodes
-    if len(TESTS) > 1:
-        raise NotImplementedError("Not yet set up for multiple tests")
-
+    # 2. Run the tests
     for test in TESTS:
         test_dir = TEST_DIR / test.name
         subprocess.run(["pixi", "run", "subtasks", "-t", nodes], cwd=test_dir)
+
+    # 3. Record the current repository versions
+    setup_repo_info = repos_current_version()
+    print(f"\nWriting setup repo information to {SETUP_REPO_INFO_FILE}")
+    SETUP_REPO_INFO_FILE.write_text(yaml.safe_dump(dict(setup_repo_info)))
 
 
 @main.command("status")
@@ -109,7 +106,7 @@ def repos_current_version() -> RepoInfo:
 
     :return: One-line summaries of most recent commits
     """
-    repos_warn_about_uncommitted_python_changes()
+    check_for_uncommited_python_changes()
     version_dct = repos_output(["git", "log", "--oneline", "-n", "1"])
     return RepoInfo(**version_dct)
 
@@ -121,7 +118,7 @@ def repos_version_diff(repo_info: RepoInfo) -> RepoInfo:
     :param repo_info: The repository information to compare to
     :return: One-line summaries of each commit since the one given
     """
-    repos_warn_about_uncommitted_python_changes()
+    check_for_uncommited_python_changes()
     command_dct = {
         k: [f"{commit_hash_from_line(v)}..HEAD"] for k, v in dict(repo_info).items()
     }
@@ -130,17 +127,31 @@ def repos_version_diff(repo_info: RepoInfo) -> RepoInfo:
     return RepoInfo(**diff_dct)
 
 
-def repos_warn_about_uncommitted_python_changes() -> None:
-    """Assert that there are no uncommited Python changes in any repo"""
+class UncommittedChangesError(Exception):
+    pass
+
+
+START_YELLOW = "\033[93m"
+END_COLOR = "\033[0m"
+warnings.formatwarning = lambda m, c, *_: f"{START_YELLOW}{c.__name__}{END_COLOR}: {m}"
+
+
+def check_for_uncommited_python_changes(throw_error: bool = False) -> None:
+    """Assert that there are no uncommited Python changes in any repo.
+
+    :param throw_error: Throw an error if there are uncommitted changes?
+    """
     status_dct = repos_output(["git", "status", "-s", "*.py"])
     for repo, status in status_dct.items():
         if status:
-            color_start = "\033[93m"
-            color_end = "\033[0m"
-            warnings.formatwarning = (
-                lambda m, c, *_: f"{color_start}{c.__name__}{color_end}: {m}"
+            message = (
+                f"{repo} has uncommitted Python changes:\n{status}\n"
+                f"Make sure your repositories are clean before running tests!\n"
             )
-            warnings.warn(f"{repo} has uncommitted Python changes:\n{status}\n")
+            if throw_error:
+                raise UncommittedChangesError(message)
+            else:
+                warnings.warn(message)
 
 
 def commit_hash_from_line(line: str) -> str:
