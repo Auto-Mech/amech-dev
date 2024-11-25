@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 import os
+import re
 import shutil
 import subprocess
+import tarfile
 import warnings
+from collections.abc import Sequence
 from pathlib import Path
 
 import automech
 import click
 import yaml
 from pydantic import BaseModel
-
-
-class TestConfig(BaseModel):
-    name: str
 
 
 class RepoInfo(BaseModel, extra="allow"):
@@ -24,14 +23,15 @@ class RepoInfo(BaseModel, extra="allow"):
 
 
 SRC_DIR = Path("src").resolve()
-EXAMPLE_DIR = Path("src/mechdriver/examples").resolve()
-TEST_DIR = Path("src/mechdriver/tests").resolve()
-TESTS = [
-    TestConfig(**c) for c in yaml.safe_load((TEST_DIR / "config.yaml").read_text())
-]
+EXAMPLE_ROOT_DIR = Path("src/mechdriver/examples").resolve()
+TEST_ROOT_DIR = Path("src/mechdriver/tests").resolve()
+TESTS = [t for t in yaml.safe_load((TEST_ROOT_DIR / "config.yaml").read_text())]
+EXAMPLE_DIRS: list[Path] = [EXAMPLE_ROOT_DIR / t for t in TESTS]
+TEST_DIRS: list[Path] = [TEST_ROOT_DIR / t for t in TESTS]
 
-SETUP_REPO_INFO_FILE = TEST_DIR / "setup_repo_info.yaml"
-SIGNED_REPO_INFO_FILE = TEST_DIR / "signed_repo_info.yaml"
+RUN_PROV_FILE = TEST_ROOT_DIR / "run_prov.yaml"
+SIGN_PROV_FILE = TEST_ROOT_DIR / "sign_prov.yaml"
+ARCHIVE_FILE = TEST_ROOT_DIR / "archive.tgz"
 
 
 @click.group()
@@ -41,51 +41,43 @@ def main():
 
 
 @main.command("local")
-@click.argument("nodes")
-def local(nodes: str):
+@click.argument("nodes", nargs=-1)
+def local(nodes: Sequence[str]):
     """Run local tests on one or more nodes.
 
     :param nodes: A comma-separted list of nodes
     """
-    check_for_uncommited_python_changes(throw_error=True)
-
     assert len(TESTS) == 1, "Not yet ready for more than one test."
 
-    # 1. Set up the directories and split into subtasks
-    for test in TESTS:
-        # Remove the test directory, if it exists
-        test_dir = TEST_DIR / test.name
+    # 1. Record the current repository versions
+    check_for_uncommited_python_changes(throw_error=True)
+    run_prov = repos_current_version()
+    print(f"\nWriting setup repo information to {RUN_PROV_FILE}")
+    RUN_PROV_FILE.write_text(yaml.safe_dump(dict(run_prov)))
+
+    # 2. Copy the example directories over
+    for test_dir, example_dir in zip(TEST_DIRS, EXAMPLE_DIRS, strict=True):
         if test_dir.exists():
             print(f"Removing {test_dir}")
             shutil.rmtree(test_dir)
 
-        # Create a clean test directory
-        example_inp_dir = EXAMPLE_DIR / test.name / "inp"
-        test_inp_dir = test_dir / "inp"
-        print(f"Creating {test_inp_dir} from {example_inp_dir}")
-        shutil.copytree(example_inp_dir, test_inp_dir, dirs_exist_ok=True)
+        print(f"Creating {test_dir} from {example_dir}")
+        shutil.copytree(example_dir / "inp", test_dir / "inp", dirs_exist_ok=True)
 
-        # Create the subtasks
-        print(f"Setting up subtasks in {test_dir}")
-        os.chdir(test_dir)
-        automech.subtasks.setup(".")
+    # 3. Set up subtasks
+    automech.subtasks.setup_multiple(TEST_DIRS)
 
-    # 2. Run the tests
-    for test in TESTS:
-        test_dir = TEST_DIR / test.name
-        subprocess.run(["pixi", "run", "subtasks", "-t", nodes], cwd=test_dir)
-
-    # 3. Record the current repository versions
-    setup_repo_info = repos_current_version()
-    print(f"\nWriting setup repo information to {SETUP_REPO_INFO_FILE}")
-    SETUP_REPO_INFO_FILE.write_text(yaml.safe_dump(dict(setup_repo_info)))
+    # 4. Run subtasks
+    automech.subtasks.run_multiple(
+        TEST_DIRS, nodes=nodes, activation_hook=pixi_activation_hook()
+    )
 
 
 @main.command("status")
 def status():
     """Check the status of electronic structure calculations."""
     for test in TESTS:
-        test_dir = TEST_DIR / test.name
+        test_dir = TEST_ROOT_DIR / test.name
         print(f"Checking status in {test_dir}...")
         os.chdir(test_dir)
         automech.subtasks.status()
@@ -94,11 +86,11 @@ def status():
 @main.command("sign")
 def sign():
     """Sign off on electronic structure calculations."""
-    setup_repo_info = RepoInfo(**yaml.safe_load(SETUP_REPO_INFO_FILE.read_text()))
+    setup_repo_info = RepoInfo(**yaml.safe_load(RUN_PROV_FILE.read_text()))
     signed_repo_info = repos_version_diff(setup_repo_info)
-    print(f"\nWriting signed repo information to {SIGNED_REPO_INFO_FILE}")
+    print(f"\nWriting signed repo information to {SIGN_PROV_FILE}")
     signed_dct = {"username": github_username(), **dict(signed_repo_info)}
-    SIGNED_REPO_INFO_FILE.write_text(yaml.safe_dump(signed_dct))
+    SIGN_PROV_FILE.write_text(yaml.safe_dump(signed_dct))
 
 
 def repos_current_version() -> RepoInfo:
@@ -195,6 +187,48 @@ def github_username() -> str:
     return subprocess.check_output(
         ["git", "config", "--global", "user.name"], text=True
     ).strip()
+
+
+def pixi_activation_hook() -> str:
+    result = subprocess.run(["pixi", "shell-hook"], capture_output=True, text=True)
+    return result.stdout
+
+
+@main.command("archive")
+def archive() -> None:
+    """Tar a directory in its current location
+
+    :param path: The path to a directory
+    """
+    exclude = ("subtasks/", "run/")
+
+    os.chdir(TEST_ROOT_DIR)
+    print(f"Creating {ARCHIVE_FILE}...")
+    ARCHIVE_FILE.unlink(missing_ok=True)
+    with tarfile.open(ARCHIVE_FILE, "w:gz") as tar:
+        if RUN_PROV_FILE.exists():
+            tar.add(RUN_PROV_FILE, arcname=RUN_PROV_FILE.name)
+        if SIGN_PROV_FILE.exists():
+            tar.add(SIGN_PROV_FILE, arcname=SIGN_PROV_FILE.name)
+        for test in TESTS:
+            tar.add(
+                test,
+                arcname=test,
+                filter=lambda x: None if any(e in x.name for e in exclude) else x,
+            )
+
+
+@main.command("unpack")
+def unpack_archive() -> None:
+    """Un-tar a directory in its current location
+
+    :param path: The path where the AutoMech subtasks were set up
+    """
+    os.chdir(TEST_ROOT_DIR)
+    if ARCHIVE_FILE.exists():
+        print(f"Unpacking {ARCHIVE_FILE}...")
+        with tarfile.open(ARCHIVE_FILE, "r") as tar:
+            tar.extractall()
 
 
 if __name__ == "__main__":
