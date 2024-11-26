@@ -95,7 +95,7 @@ run in parallel on a local cluster (requires SSH node access; currently not inte
 to a workload manager). Then, an end-to-end workflow is run with the filesystem database
 from step 1. This second step can be done locally and also runs on GitHub Actions.
 
-### Step 1: Generate Electronic Structure Data
+### Local Testing
 
 #### Run local tests
 
@@ -155,7 +155,7 @@ additional commits to each module relative to the tested version.
 The record of these additional changes will be included in the `signature.yaml` file.
 
 
-### Step 2: End-to-end Workflow Test with Step 1 Data
+### End-to-end Workflow Testing
 
 Once the local tests have been run, you can use the following command to run an
 end-to-end workflow test using the electronic structure data generated above.[^5]
@@ -164,6 +164,14 @@ pytest -n auto -v src/mechdriver/tests/
 ```
 This is the same command that will be run on GitHub Actions.
 
+### Adding New Tests
+
+Adding a new test is a two-step process:
+
+1. Add a folder containing the MechDriver input for your test to `src/mechdriver/examples`
+2. Add the name of this folder to the list in `src/mechdriver/tests/config.yaml`.
+
+The next time you run tests, your new example will now be included.
 
 ## Contribute
 
