@@ -68,8 +68,6 @@ def local(nodes: Sequence[str]):
 
     :param nodes: A comma-separted list of nodes
     """
-    assert len(TESTS) == 1, "Not yet ready for more than one test."
-
     # 1. Record the current repository versions
     check_for_uncommited_python_changes(throw_error=True)
     prov = repos_current_version()

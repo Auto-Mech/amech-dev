@@ -90,15 +90,51 @@ pixi run node csed-0001 out.log "g16 run.inp run.out"  	# run Gaussian
 
 ## Test
 
+Testing MechDriver is a two-step process. First, electronic structure calculations are
+run in parallel on a local cluster (requires SSH node access; currently not interfaced
+to a workload manager). Then, an end-to-end workflow is run with the filesystem database
+from step 1. This second step can be done locally and also runs on GitHub Actions.
+
 ### Step 1: Generate Electronic Structure Data
 
-The data generated here is compressed and stored in the MechDriver repository to be used
-on step 2.
+#### Running the local tests
+
+Local tests can be run with the following command.
 ```
-pixi run test setup       # create clean run directories
-pixi run test els <node>  # run data generation on a node, e.g. csed-0005
-pixi run test status      # check data generation progress
+pixi run test local <node1> <node2> <...> &> test.log &
 ```
+The nodes can be individually named or expanded as a Bash sequence, e.g.
+`csed-00{09..12}`.  The species/reaction-specific subtasks are parallelized across the
+given nodes for each task.  Unfortunately, this means that all jobs for a given task
+must complete before the workflow can move on to the next one.
+
+#### Checking the status of a run
+
+You can check the status of the tests as follows.
+```
+pixi run test status
+```
+This will display a table showing the status of your jobs and generate a set of
+`check_<test name>.log` files, containing the paths to any jobs that do not have an `OK`
+status (including running jobs), as well as the last line of the job log file.
+This file is designed to be easily grep-able:
+```
+grep "~conf_energy" check_quick.log       # See paths
+grep "~conf_energy" -A 1 check_quick.log  # See paths and last lines
+```
+
+#### Signing a test run (REQUIRED)
+
+Once the local tests have completed, you **must** run the following command to "sign"
+the test run.
+Make sure your Git username is configured before you do this. [^4]
+```
+pixi run test sign
+```
+This will create a `signature.yaml` file in the test directory containing your Git
+username and the commit hashes of each AutoMech module.
+To confirm that the tests are up to date, our GitHub Actions workflow checks that these
+commit hashes match the current ones on GitHub (excluding "Merge pull request" commits).
 
 ### Step 2: Run End-to-end Workflow with Existing Electronic Structure Data
 
@@ -252,3 +288,5 @@ gets out of sync, i.e.  `pixi run update upstream dev --force`.
 
 [^3]: This script simply runs `git status` in each repository.
 If you want to run a different command, you can pass it as an argument, i.e. `pixi run git branch -v` to see which branches are checked out.
+
+[^4]: The command to configure your git username is `git config --global user.name "<username>"`
