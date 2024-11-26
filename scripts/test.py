@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import shutil
+import socket
 import subprocess
 import tarfile
 import textwrap
@@ -68,7 +69,8 @@ def local(nodes: Sequence[str]):
 
     :param nodes: A comma-separted list of nodes
     """
-    assert len(TESTS) == 1, "Not yet ready for more than one test."
+    print("Process ID:", os.getpid())
+    print("Host name:", socket.gethostname())
 
     # 1. Record the current repository versions
     check_for_uncommited_python_changes(throw_error=True)

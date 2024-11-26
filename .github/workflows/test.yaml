@@ -26,4 +26,5 @@ jobs:
 
       - name: Run tests
         run: |
+          # pixi run pytest -n auto -v src/mechdriver/tests/
           pixi run pytest -v src/mechdriver/tests/

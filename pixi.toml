@@ -64,6 +64,7 @@ sphinx = "*"
 myst-parser = "*"
 sphinx-book-theme = "*"
 sphinx-autodoc-typehints = "*"
+pytest-xdist = { version = ">=3.6.1, <4", extras = ["psutil"] }
 
 [feature.build.dependencies]
 cmake = ">=3.30.0,<3.31"

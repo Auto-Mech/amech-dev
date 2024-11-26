@@ -90,25 +90,79 @@ pixi run node csed-0001 out.log "g16 run.inp run.out"  	# run Gaussian
 
 ## Test
 
+Testing MechDriver is a two-step process. First, electronic structure calculations are
+run in parallel on a local cluster (requires SSH node access; currently not interfaced
+to a workload manager). Then, an end-to-end workflow is run with the filesystem database
+from step 1. This second step can be done locally and also runs on GitHub Actions.
+
 ### Step 1: Generate Electronic Structure Data
 
-The data generated here is compressed and stored in the MechDriver repository to be used
-on step 2.
+#### Run local tests
+
+Local tests can be run with the following command.
 ```
-pixi run test setup       # create clean run directories
-pixi run test els <node>  # run data generation on a node, e.g. csed-0005
-pixi run test status      # check data generation progress
+pixi run test local <node1> <node2> <...> &> test.log &
+```
+The nodes can be individually named or expanded as a Bash sequence, e.g.
+`csed-00{09..12}`.  The species/reaction-specific subtasks are parallelized across the
+given nodes for each task.  Unfortunately, this means that all jobs for a given task
+must complete before the workflow can move on to the next one.
+
+At the end of the run, the data from the local test run will be zipped into `.tgz`
+archive for use in GitHub Actions workflow testing (see below). This archive will
+include a `provenance.yaml` file recording the current commit hash of each repository.
+To make sure the latter is accurate, you will be prevented from running tests if you
+have uncommitted changes in one or more Python files.
+
+#### Check progress
+
+You can check the progress of a local test run as follows.
+```
+pixi run test status
+```
+This will display a table showing the status of your jobs and generate a set of
+`check_<test name>.log` files, containing the paths to any jobs that do not have an `OK`
+status (including running jobs), as well as the last line of the job log file.
+This file is designed to be easily grep-able:
+```
+grep "~conf_energy" check_quick.log       # See paths
+grep "~conf_energy" -A 1 check_quick.log  # See paths and last lines
 ```
 
-### Step 2: Run End-to-end Workflow with Existing Electronic Structure Data
+#### Signature required
 
-This step uses the data from step 1 to run an end-to-end workflow with the code.
+Once the local tests have completed, you **must** run the following command to "sign"
+the test run.
+Make sure your Git username is configured before you do this. [^4]
 ```
-pytest -v src/mechdriver/tests/
+pixi run test sign
 ```
-Although this works with old data, step 1 should be regularly re-run to catch any bugs
-related to electronic structure data generation.
-This is currently an honor system.
+This will create a `signature.yaml` file in the test directory containing your Git
+username and the commit hashes of each AutoMech module.
+
+To confirm that the tests are up to date, the GitHub Actions workflow checks that these
+commit hashes match the current ones on GitHub (excluding "Merge pull request" commits).
+Note that this means you will need to merge any changes to the lower-level modules
+**before** merging changes to MechDriver.
+
+#### What if I only made a small change?
+
+If you only made a small change, or made changes that you are confident will not affect
+the tested functionality, you can do the last step (signing) *without* re-running the
+local tests.
+This time, when you run `pixi run test sign`, you will be prompted to approve the
+additional commits to each module relative to the tested version.
+The record of these additional changes will be included in the `signature.yaml` file.
+
+
+### Step 2: End-to-end Workflow Test with Step 1 Data
+
+Once the local tests have been run, you can use the following command to run an
+end-to-end workflow test using the electronic structure data generated above.[^5]
+```
+pytest -n auto -v src/mechdriver/tests/
+```
+This is the same command that will be run on GitHub Actions.
 
 
 ## Contribute
@@ -252,3 +306,7 @@ gets out of sync, i.e.  `pixi run update upstream dev --force`.
 
 [^3]: This script simply runs `git status` in each repository.
 If you want to run a different command, you can pass it as an argument, i.e. `pixi run git branch -v` to see which branches are checked out.
+
+[^4]: The command to configure your git username is `git config --global user.name "<username>"`
+
+[^5]: The `-n auto` option runs these tests in parallel.
