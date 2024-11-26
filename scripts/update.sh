@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # This script updates each repo against a remote
+# (It also updates the amech-dev repo.)
 #
 # Performs a pull --rebase followed by a push
 #
@@ -18,13 +19,17 @@ REMOTE=${1:-upstream}
 BRANCH=${2:-dev}
 FLAGS=${@:3}
 
+# 1. Update the amech-dev repo
+git pull https://github.com/Auto-Mech/amech-dev
+pixi install
+
+# 2. Loop through each repo and update
 echo "Execute the following commands in each repository?"
 echo "    git checkout ${BRANCH}"
 echo "    git pull --rebase ${REMOTE} ${BRANCH}"
 echo "    git push ${FLAGS} origin ${BRANCH}"
 read -p "Press enter to confirm "
 
-# 2. Loop through each repo and execute the command
 for repo in ${REPOS[@]}
 do
     printf "\n*** Updating in ${DIR}/src/${repo} ***\n"
