@@ -97,7 +97,7 @@ from step 1. This second step can be done locally and also runs on GitHub Action
 
 ### Step 1: Generate Electronic Structure Data
 
-#### Running the local tests
+#### Run local tests
 
 Local tests can be run with the following command.
 ```
@@ -108,9 +108,15 @@ The nodes can be individually named or expanded as a Bash sequence, e.g.
 given nodes for each task.  Unfortunately, this means that all jobs for a given task
 must complete before the workflow can move on to the next one.
 
-#### Checking the status of a run
+At the end of the run, the data from the local test run will be zipped into `.tgz`
+archive for use in GitHub Actions workflow testing (see below). This archive will
+include a `provenance.yaml` file recording the current commit hash of each repository.
+To make sure the latter is accurate, you will be prevented from running tests if you
+have uncommitted changes in one or more Python files.
 
-You can check the status of the tests as follows.
+#### Check progress
+
+You can check the progress of a local test run as follows.
 ```
 pixi run test status
 ```
@@ -123,7 +129,7 @@ grep "~conf_energy" check_quick.log       # See paths
 grep "~conf_energy" -A 1 check_quick.log  # See paths and last lines
 ```
 
-#### Signing a test run (REQUIRED)
+#### Signature required
 
 Once the local tests have completed, you **must** run the following command to "sign"
 the test run.
@@ -133,18 +139,30 @@ pixi run test sign
 ```
 This will create a `signature.yaml` file in the test directory containing your Git
 username and the commit hashes of each AutoMech module.
-To confirm that the tests are up to date, our GitHub Actions workflow checks that these
+
+To confirm that the tests are up to date, the GitHub Actions workflow checks that these
 commit hashes match the current ones on GitHub (excluding "Merge pull request" commits).
+Note that this means you will need to merge any changes to the lower-level modules
+**before** merging changes to MechDriver.
 
-### Step 2: Run End-to-end Workflow with Existing Electronic Structure Data
+#### What if I only made a small change?
 
-This step uses the data from step 1 to run an end-to-end workflow with the code.
+If you only made a small change, or made changes that you are confident will not affect
+the tested functionality, you can do the last step (signing) *without* re-running the
+local tests.
+This time, when you run `pixi run test sign`, you will be prompted to approve the
+additional commits to each module relative to the tested version.
+The record of these additional changes will be included in the `signature.yaml` file.
+
+
+### Step 2: End-to-end Workflow Test with Step 1 Data
+
+Once the local tests have been run, you can use the following command to run an
+end-to-end workflow test using the electronic structure data generated above.[^5]
 ```
-pytest -v src/mechdriver/tests/
+pytest -n auto -v src/mechdriver/tests/
 ```
-Although this works with old data, step 1 should be regularly re-run to catch any bugs
-related to electronic structure data generation.
-This is currently an honor system.
+This is the same command that will be run on GitHub Actions.
 
 
 ## Contribute
@@ -290,3 +308,5 @@ gets out of sync, i.e.  `pixi run update upstream dev --force`.
 If you want to run a different command, you can pass it as an argument, i.e. `pixi run git branch -v` to see which branches are checked out.
 
 [^4]: The command to configure your git username is `git config --global user.name "<username>"`
+
+[^5]: The `-n auto` option runs these tests in parallel.

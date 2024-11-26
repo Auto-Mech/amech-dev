@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import shutil
+import socket
 import subprocess
 import tarfile
 import textwrap
@@ -68,6 +69,9 @@ def local(nodes: Sequence[str]):
 
     :param nodes: A comma-separted list of nodes
     """
+    print("Process ID:", os.getpid())
+    print("Host name:", socket.gethostname())
+
     # 1. Record the current repository versions
     check_for_uncommited_python_changes(throw_error=True)
     prov = repos_current_version()
