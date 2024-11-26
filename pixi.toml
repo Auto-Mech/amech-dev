@@ -13,7 +13,7 @@ download = { cmd = "./scripts/download.sh", cwd = "." }
 install = { cmd = "./scripts/install.sh", cwd = "." }
 update = { cmd = "./scripts/update.sh", cwd = "." }
 git = { cmd = "./scripts/git.sh", cwd = "." }
-test = { cmd = "./scripts/test.py", cwd = "." }
+test = { cmd = "./scripts/test.py" }
 subtasks = { cmd = "./scripts/subtasks.sh" }
 node = { cmd = "./scripts/node.sh" }
 x2z = { cmd = "./scripts/x2z.py" }
