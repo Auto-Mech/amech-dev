@@ -47,11 +47,7 @@ def local(nodes: Sequence[str]):
 @main.command("sign")
 def sign():
     """Sign off on local tests."""
-    TEST_UTILS.check_for_uncommited_python_changes()
-    TEST_UTILS.extract_archived_tests()
-    TEST_UTILS.sign_tests()
-    TEST_UTILS.archive_tests()
-    TEST_UTILS.commit_test_archive()
+    sign_()
 
 
 def pixi_activation_hook() -> str:
@@ -75,6 +71,16 @@ def local_(nodes: Sequence[str]):
         TEST_UTILS.test_dirs, nodes=nodes, activation_hook=pixi_activation_hook()
     )
     TEST_UTILS.archive_tests()
+    sign_()
+
+
+def sign_():
+    """Sign off on local tests."""
+    TEST_UTILS.check_for_uncommited_python_changes()
+    TEST_UTILS.extract_archived_tests()
+    TEST_UTILS.sign_tests()
+    TEST_UTILS.archive_tests()
+    TEST_UTILS.commit_test_archive()
 
 
 if __name__ == "__main__":
