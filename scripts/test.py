@@ -29,22 +29,19 @@ def status():
         automech.subtasks.status(test_dir, check_file=f"check_{test_dir.name}.log")
 
 
-@main.command("local")
+@main.command("local", hidden=True)
 @click.argument("nodes", nargs=-1)
 def local(nodes: Sequence[str]):
     """Run local tests on one or more nodes.
 
-    :param nodes: A comma-separted list of nodes
-    """
-    print("Process ID:", os.getpid())
-    print("Host name:", socket.gethostname())
+    Runs hidden local_
 
-    TEST_UTILS.setup_tests()
-    automech.subtasks.setup_multiple(TEST_UTILS.test_dirs)
-    automech.subtasks.run_multiple(
-        TEST_UTILS.test_dirs, nodes=nodes, activation_hook=pixi_activation_hook()
-    )
-    TEST_UTILS.archive_tests()
+    :param nodes: A list of nodes
+    """
+    log_name = "test.log"
+    test_cmd = " ".join(["pixi run test local_", *nodes])
+    cmd = ["pixi", "run", "node", nodes[-1], log_name, test_cmd]
+    print(subprocess.check_output(cmd, text=True))
 
 
 @main.command("sign")
@@ -59,6 +56,25 @@ def sign():
 
 def pixi_activation_hook() -> str:
     return subprocess.check_output(["pixi", "shell-hook"], text=True)
+
+
+# Hidden command
+@main.command("local_", hidden=True)
+@click.argument("nodes", nargs=-1)
+def local_(nodes: Sequence[str]):
+    """Run local tests on one or more nodes.
+
+    :param nodes: A list of nodes
+    """
+    print("Process ID:", os.getpid())
+    print("Host name:", socket.gethostname())
+
+    TEST_UTILS.setup_tests()
+    automech.subtasks.setup_multiple(TEST_UTILS.test_dirs)
+    automech.subtasks.run_multiple(
+        TEST_UTILS.test_dirs, nodes=nodes, activation_hook=pixi_activation_hook()
+    )
+    TEST_UTILS.archive_tests()
 
 
 if __name__ == "__main__":

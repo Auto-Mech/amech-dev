@@ -101,7 +101,7 @@ from step 1. This second step can be done locally and also runs on GitHub Action
 
 Local tests can be run with the following command.
 ```
-pixi run test local <node1> <node2> <...> &> test.log &
+pixi run test local <node1> <node2> <...>
 ```
 The nodes can be individually named or expanded as a Bash sequence, e.g.
 `csed-00{09..12}`.  The species/reaction-specific subtasks are parallelized across the
@@ -143,7 +143,8 @@ username and the commit hashes of each AutoMech module.
 To confirm that the tests are up to date, the GitHub Actions workflow checks that these
 commit hashes match the current ones on GitHub (excluding "Merge pull request" commits).
 Note that this means you will need to merge any changes to the lower-level modules
-**before** merging changes to MechDriver.
+**before** merging changes to MechDriver (or, if they involve work in progress, stash the
+un-merged changes on a feature branch).
 
 #### What if I only made a small change?
 
