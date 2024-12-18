@@ -93,13 +93,28 @@ pixi run node csed-0001 out.log "g16 run.inp run.out"  	# run Gaussian
 Testing MechDriver is a two-step process. First, electronic structure calculations are
 run in parallel on a local cluster (requires SSH node access; currently not interfaced
 to a workload manager). Then, an end-to-end workflow is run with the filesystem database
-from step 1. This second step can be done locally and also runs on GitHub Actions.
+from step 1. This second step is what runs on GitHub Actions every time the code is
+updated.
 
 ### Local Testing
 
+Before running tests, make sure you have merged any changes to the lower-level modules
+into their central Auto-Mech GitHub repositories.
+Without this, your GitHub Actions workflow will raise an error because the tested
+version does not match the current one on GitHub.
+If your lower-level modules contain work-in-progress, move it to a feature branch and switch back to `dev` before running tests.
+
+The first time you run tests on a new machine, you will also need to run the following
+command to save your GitHub username as a Git configuration variable.
+```
+git config --global user.name                   # check the current value
+git config --global user.name "<username>"      # update the value
+```
+This configuration variable is used by the `signature.yaml` file described below.
+
 #### Run local tests
 
-Local tests can be run with the following command.
+Use the following command to run the test cases locally.
 ```
 pixi run test local <node1> <node2> <...>
 ```
@@ -109,63 +124,58 @@ given nodes for each task.  Unfortunately, this means that all jobs for a given 
 must complete before the workflow can move on to the next one.
 
 At the end of the run, the data from the local test run will be zipped into `.tgz`
-archive for use in GitHub Actions workflow testing (see below). This archive will
-include a `provenance.yaml` file recording the current commit hash of each repository.
-To make sure the latter is accurate, you will be prevented from running tests if you
-have uncommitted changes in one or more Python files.
+archive and added in a separate git commit for use in GitHub Actions workflow testing
+(see below).
+This archive includes a `provenance.yaml` file recording the current commit hash of each
+repository and a `signature.yaml` file which, in this case, records the same
+information.
+To make sure the recorded provenance is accurate, you will be prevented from running tests if you
+have uncommitted changes in any Python files.
+The commit hashes in the `siganture.yaml` file are used by the GitHub Actions workflow to check that the tests are up-to-date.
+If these do not match the respective GitHub repos, the "signature" test on GitHub
+Actions will fail.
+
 
 #### Check progress
 
-You can check the progress of a local test run as follows.
+You can check the progress of a local test with the following command.
 ```
 pixi run test status
 ```
 This will display a table showing the status of your jobs and generate a set of
-`check_<test name>.log` files, containing the paths to any jobs that do not have an `OK`
-status (including running jobs), as well as the last line of the job log file.
-This file is designed to be easily grep-able:
+`check_<test name>.log` files, containing the paths to any jobs that have something
+other than an `OK` status (including running jobs), along with the last line of the log
+file for these jobs.
+These files are designed to be easily grep-able:
 ```
 grep "~conf_energy" check_quick.log       # See paths
 grep "~conf_energy" -A 1 check_quick.log  # See paths and last lines
 ```
 
-#### Signature required
+#### Update `signature.yaml` without re-running local tests
 
-Once the local tests have completed, you **must** run the following command to "sign"
-the test run.
-Make sure your Git username is configured before you do this. [^4]
+If you only made a small change, or made changes that you are confident will not affect
+the tested functionality, you can override the signature test by locally running the
+following command before merging:
 ```
 pixi run test sign
 ```
-This will create a `signature.yaml` file in the test directory containing your Git
-username and the commit hashes of each AutoMech module.
-
-To confirm that the tests are up to date, the GitHub Actions workflow checks that these
-commit hashes match the current ones on GitHub (excluding "Merge pull request" commits).
-Note that this means you will need to merge any changes to the lower-level modules
-**before** merging changes to MechDriver (or, if they involve work in progress, stash the
-un-merged changes on a feature branch).
-
-#### What if I only made a small change?
-
-If you only made a small change, or made changes that you are confident will not affect
-the tested functionality, you can do the last step (signing) *without* re-running the
-local tests.
-This time, when you run `pixi run test sign`, you will be prompted to approve the
-additional commits to each module relative to the tested version.
-The record of these additional changes will be included in the `signature.yaml` file.
+You will be prompted to approve the changes made to each repo since the tests were last run.
+These "overrides" will be recorded in the `signature.yaml` and the signature test will
+now pass.
 
 
-### End-to-end Workflow Testing
+### Remote Testing
 
-Once the local tests have been run, you can use the following command to run an
-end-to-end workflow test using the electronic structure data generated above.[^5]
+GitHub Actions will use the following `pytest` commands to check the `signature.yaml`
+file and to run the test cases using the archived electronic structure data.[^5]
 ```
-pytest -n auto -v src/mechdriver/tests/
+pytest -v src/mechdriver/tests/ -k "signature"              # check the signature
+pytest -n auto -v src/mechdriver/tests/ -k "not signature"  # run test cases
 ```
-This is the same command that will be run on GitHub Actions.
+You can run these locally as well.
 
-### Adding New Tests
+### Adding Tests
 
 Adding a new test is a two-step process:
 
@@ -315,7 +325,5 @@ gets out of sync, i.e.  `pixi run update upstream dev --force`.
 
 [^3]: This script simply runs `git status` in each repository.
 If you want to run a different command, you can pass it as an argument, i.e. `pixi run git branch -v` to see which branches are checked out.
-
-[^4]: The command to configure your git username is `git config --global user.name "<username>"`
 
 [^5]: The `-n auto` option runs these tests in parallel.
