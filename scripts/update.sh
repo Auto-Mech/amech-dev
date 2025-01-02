@@ -21,6 +21,7 @@ FLAGS=${@:3}
 
 # 1. Update the amech-dev repo
 git pull https://github.com/Auto-Mech/amech-dev
+pixi self-update
 pixi install
 
 # 2. Loop through each repo and update

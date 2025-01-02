@@ -114,7 +114,7 @@ This configuration variable is used by the `signature.yaml` file described below
 
 #### Run local tests
 
-Use the following command to run the test cases locally.
+Use the following command to run the test cases locally.[^4]
 ```
 pixi run test local <node1> <node2> <...>
 ```
@@ -325,5 +325,9 @@ gets out of sync, i.e.  `pixi run update upstream dev --force`.
 
 [^3]: This script simply runs `git status` in each repository.
 If you want to run a different command, you can pass it as an argument, i.e. `pixi run git branch -v` to see which branches are checked out.
+
+[^4]: The first time you do this, you may also need to make sure that your environment
+is fully up-to-date:
+`git pull https://github.com/Auto-Mech/amech-dev && pixi run update`.
 
 [^5]: The `-n auto` option runs these tests in parallel.
