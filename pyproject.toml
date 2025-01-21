@@ -1,0 +1,120 @@
+[project]
+authors = [{name = "Andreas Copan", email = "avcopan@gmail.com"}]
+description = "Add a short description here"
+name = "automech"
+requires-python = ">= 3.11"
+version = "0.1.0"
+dependencies = ["pip", "pylint", "pytest", "black", "ruff", "mypy", "sphinx", "myst-parser", "sphinx-book-theme", "sphinx-autodoc-typehints", "pytest-xdist[psutil]", "pre-commit"]
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.pixi.project]
+channels = ["conda-forge", "auto-mech"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+automech = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+build = { cmd = "./scripts/build.sh", cwd = "." }
+build-toolbox = { cmd = "./src/automech-toolbox/build.sh", cwd = "." }
+download = { cmd = "./scripts/download.sh", cwd = "." }
+install = { cmd = "./scripts/install.sh", cwd = "." }
+update = { cmd = "./scripts/update.sh", cwd = "." }
+git = { cmd = "./scripts/git.sh", cwd = "." }
+test = { cmd = "./scripts/test.py" }
+subtasks = { cmd = "./scripts/subtasks.sh" }
+node = { cmd = "./scripts/node.sh" }
+x2z = { cmd = "./scripts/x2z.py" }
+
+[tool.pixi.dependencies]
+python = "3.11.*"
+# AutoChem dependencies
+ipython = "8.15.*"
+ipywidgets = "*"
+jupyter = "*"
+more-itertools = "*"
+networkx = "3.3.*"
+numpy = "1.26.*"
+py3dmol = "*"
+pyparsing = "*"
+pyyaml = "*"
+qcelemental = "*"
+rdkit = "*"
+scipy = "1.12.*"
+xarray = "2023.8.*"
+# AutoIO dependencies
+mako = "*"
+# AutoFile dependencies
+# MechAnalyzer dependencies
+click = "*"
+pandas = "2.1.*"
+matplotlib = "3.8.*"
+python-igraph = "*"
+# MechDriver dependencies
+pydantic = "*"
+automech-toolbox = "*"
+parallel = "*"
+
+[tool.pixi.system-requirements]
+linux="3.10"
+libc = { family="glibc", version="2.17" }
+
+[tool.pixi.feature.build.dependencies]
+cmake = ">=3.30.0,<3.31"
+cxx-compiler = ">=1.7.0,<1.8"
+fortran-compiler = ">=1.7.0,<1.8"
+c-compiler = ">=1.7.0,<1.8"
+make = ">=4.3,<5"
+rattler-build = ">=0.18.1,<0.19"
+libgfortran = ">=3.0.0,<3.1"
+libgcc = ">=7.2.0,<7.3"
+libstdcxx-ng = ">=14.1.0,<14.2"
+
+[tool.pixi.environments]
+build = ["build"]
+
+# tools
+[tool.black]
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+target-version = "py311"
+extend-select = [
+    "E",      # style errors
+    "F",      # flakes
+    "D",      # pydocstyle
+    "I001",   # isort
+    "UP",     # pyupgrade
+    "N",      # pep8-naming
+    "C",      # flake8-comprehensions
+    "B",      # flake8-bugbear
+    "A001",   # flake8-builtins
+    "RUF",    # ruff-specific rules
+    "RUF100", # Unused noqa directive
+]
+extend-ignore = [
+    "D100", # Missing docstring in public module
+    "D101", # Missing docstring in public class
+    "D103", # Missing docstring in public function
+    "D107", # Missing docstring in __init__
+    "D203", # 1 blank line required before class docstring
+    "D205", # 1 blank line required between summary line and description
+    "D212", # Multi-line docstring summary should start at the first line
+    "D213", # Multi-line docstring summary should start at the second line
+    "D413", # Missing blank line after last section
+    "D416", # Section name should end with a colon
+    "N806", # Variable in function should be lowercase
+    "C901", # Too complex
+]
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+show_error_codes = true
+follow_imports = "skip"
+ignore_errors = true
