@@ -5,9 +5,9 @@ import subprocess
 from collections.abc import Sequence
 from pathlib import Path
 
-import automech
 import click
-from automech import test_utils
+import mechdriver
+from mechdriver import test_utils
 
 os.chdir(os.environ.get("INIT_CWD"))
 
@@ -26,7 +26,7 @@ def status():
     """Check the status of local tests."""
     for test_dir in TEST_UTILS.test_dirs:
         print(f"Checking status in {test_dir}...")
-        automech.subtasks.status(test_dir, check_file=f"check_{test_dir.name}.log")
+        mechdriver.subtasks.status(test_dir, check_file=f"check_{test_dir.name}.log")
 
 
 @main.command("local", hidden=True)
@@ -66,8 +66,8 @@ def local_(nodes: Sequence[str]):
     print("Host name:", socket.gethostname())
 
     TEST_UTILS.setup_tests()
-    automech.subtasks.setup_multiple(TEST_UTILS.test_dirs)
-    automech.subtasks.run_multiple(
+    mechdriver.subtasks.setup_multiple(TEST_UTILS.test_dirs)
+    mechdriver.subtasks.run_multiple(
         TEST_UTILS.test_dirs, nodes=nodes, activation_hook=pixi_activation_hook()
     )
     TEST_UTILS.archive_tests()
