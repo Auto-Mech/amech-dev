@@ -68,7 +68,7 @@ Running `automech run --help` will allow you to see the options for this command
 
 If you want to activate this Pixi environment from within a shell script, the best way to do that is with the following command:
 ```
-eval "$(pixi shell-hook --manifest-path /path/to/amech-dev/pixi.toml)"
+eval "$(pixi shell-hook --manifest-path /path/to/amech-dev/pyproject.toml)"
 ```
 You will need to edit the path to point to wherever you cloned this repository.
 
@@ -276,14 +276,14 @@ for the changes to take effect.
 
 The main Pixi commands to be aware of are as follows.
 - `pixi install`:
-Creates (or updates) an environment in a project directory using a `pixi.toml` file.
+Creates (or updates) an environment in a project directory using a `pyproject.toml` or `pixi.toml` file.
 - `pixi shell`:
 Activates a project environment.
 - `pixi add <package name>`:
 Adds a package to a project environment.
 
 *Note*:
-Adding packages to an environment will automatically update your `pixi.toml` and
+Adding packages to an environment will automatically update your `pyproject.toml` and
 `pixi.lock` files with the new dependencies.
 If other users will need these in order to run the code, be sure to submit a pull
 request with these changes to the main amech-dev repository.
