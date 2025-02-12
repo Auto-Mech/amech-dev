@@ -57,6 +57,7 @@ python-igraph = "*"
 pydantic = "*"
 automech-toolbox = "*"
 parallel = "*"
+altair-all = ">=5.4.1,<6"
 
 [tool.pixi.system-requirements]
 linux="3.10"
