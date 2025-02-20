@@ -20,7 +20,7 @@ done
 
 cd ${INIT_CWD:-$(pwd)}
 
-COMMAND="automech subtasks run ${@:ARG_OFFSET}"
+ARGS=$(printf '%q ' "${@:ARG_OFFSET}")
+COMMAND="automech subtasks run ${ARGS}"
 
-# echo pixi run node ${@: -1} ${SUBTASK_LOG} ${COMMAND@Q}
-pixi run node ${@: -1} ${SUBTASK_LOG} ${COMMAND@Q}
+pixi run node ${@: -1} ${SUBTASK_LOG} "${COMMAND}"
