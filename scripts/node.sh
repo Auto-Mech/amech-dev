@@ -14,22 +14,22 @@ echo "  NODE=${NODE}"
 echo "  LOG=${LOG}"
 echo "  COMMAND=${COMMAND}"
 
-ACTIVATION_HOOK="$(pixi shell-hook)"
+ACTIVATION_HOOK=$(printf '%q ' "$(pixi shell-hook)")
 SCRIPT_HEADER='
     echo Running on $(hostname) in $(pwd)
     echo Process ID: $$
 '
-SCRIPT="
+SCRIPT=$(printf '%q ' "
     ${SCRIPT_HEADER}
     echo Run command: ${COMMAND}
     ${COMMAND}
-"
+")
 
 # Enter working directory and initiate job from the first SSH node
-ssh ${NODE} /bin/env bash << EOF
+ssh ${NODE} /bin/env bash -l << EOF
     set -e
     cd ${WD}
     ${SCRIPT_HEADER}
-    eval ${ACTIVATION_HOOK@Q}
-    nohup sh -c ${SCRIPT@Q} > ${LOG} 2>&1 &
+    eval ${ACTIVATION_HOOK}
+    nohup sh -c ${SCRIPT} > ${LOG} 2>&1 &
 EOF
