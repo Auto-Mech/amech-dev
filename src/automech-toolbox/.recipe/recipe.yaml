@@ -1,6 +1,6 @@
 package:
   name: automech-toolbox
-  version: "2024.7.18"
+  version: "2025.4.11"
 
 source:
   path: .

@@ -42,7 +42,8 @@ c     for tt = tt + dp and tt = tt - dp
       tm = -dtderiv*dkbltz/cautoerg
       tmin = dtderiv*dkbltz/cautoerg
       t0 = 0.0d0
-      pstp = 760.0d0/pconv
+c     AVC: PAC99 input assumes 750 mmHg (1 bar) standard pressure
+      pstp = 750.0d0/pconv
       OPEN (UNIT=18,ACCESS='SEQUENTIAL',FORM='FORMATTED',
      & STATUS='unknown',FILE='thermp.out')
       OPEN (UNIT=25,ACCESS='SEQUENTIAL',FORM='FORMATTED',
