@@ -109,6 +109,7 @@ extend-ignore = [
     "D416", # Section name should end with a colon
     "N806", # Variable in function should be lowercase
     "C901", # Too complex
+    "RUF022", # Require __all__ to be sorted
 ]
 
 [tool.mypy]
