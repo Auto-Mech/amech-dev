@@ -121,3 +121,4 @@ build/
 # Log files
 *.log
 .automech/
+.vscode/
