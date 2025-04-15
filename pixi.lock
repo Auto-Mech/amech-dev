@@ -1201,7 +1201,7 @@ packages:
 - pypi: .
   name: automech
   version: 0.1.0
-  sha256: d228f9f969a8a7b07cfbd1e46a44967963bddc9cb1da7333dbc8617c8580466b
+  sha256: dd1156a61ea4ecf6689185a5c8c2d9156eeef8f7944fc0b0b839226945133fb8
   requires_dist:
   - pip
   - pylint

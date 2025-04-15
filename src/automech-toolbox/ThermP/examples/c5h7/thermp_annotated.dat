@@ -1,0 +1,10 @@
+1, 0    <--- number of wells and products (followed by variable names)
+Nwell, Nprod
+29      <--- number of temperatures (followed by variable name)
+nt
+86.239   0.0    <--- heat of formation, reference temperature (0 K)
+C5H7    <--- name and formula
+C  5
+H  7
+**
+1000.0  <--- T_mid /break temperature for fit
