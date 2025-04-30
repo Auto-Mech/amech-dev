@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 import click
+
 import mechdriver
 from mechdriver import test_utils
 
@@ -24,9 +25,7 @@ def main():
 @main.command("status")
 def status():
     """Check the status of local tests."""
-    for test_dir in TEST_UTILS.test_dirs:
-        print(f"Checking status in {test_dir}...")
-        mechdriver.subtasks.status(test_dir, check_file=f"check_{test_dir.name}.log")
+    mechdriver.subtasks.status_multiple(TEST_UTILS.test_dirs)
 
 
 @main.command("local", hidden=True)
