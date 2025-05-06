@@ -25,7 +25,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/async-lru-2.0.4-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/attr-2.5.1-h166bdaf_1.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/attrs-24.3.0-pyh71513ae_0.conda
-      - conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.7.18-h4616a5c_0.conda
+      - conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2025.4.11-h4616a5c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/aws-c-auth-0.7.26-hc36b679_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/aws-c-cal-0.7.4-h2abdd08_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/aws-c-common-0.9.27-h4bc722e_0.conda
@@ -460,7 +460,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/async-lru-2.0.4-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/attr-2.5.1-h166bdaf_1.tar.bz2
       - conda: https://conda.anaconda.org/conda-forge/noarch/attrs-24.3.0-pyh71513ae_0.conda
-      - conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.7.18-h4616a5c_0.conda
+      - conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2025.4.11-h4616a5c_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/aws-c-auth-0.8.1-h205f482_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/aws-c-cal-0.8.1-h1a47875_3.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/aws-c-common-0.10.6-hb9d3cd8_0.conda
@@ -1217,11 +1217,11 @@ packages:
   - pre-commit
   requires_python: '>=3.11'
   editable: true
-- conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2024.7.18-h4616a5c_0.conda
-  sha256: 480fb3de71f1691226c2efab710a6cb60d1f5e225ee57debed1bdb0935622102
-  md5: 73cc4a88dd6740341eb28f9d5e8baa82
-  size: 24461065
-  timestamp: 1721325495045
+- conda: https://conda.anaconda.org/auto-mech/noarch/automech-toolbox-2025.4.11-h4616a5c_0.conda
+  sha256: 453d00e53e3cd36dd0599c40d13c8c566269c57bd63ae596fb4ad710607ff26d
+  md5: d8ab8a60446ad70afbcb8eed3b0e169d
+  size: 23215164
+  timestamp: 1744380472735
 - conda: https://conda.anaconda.org/conda-forge/linux-64/aws-c-auth-0.7.26-hc36b679_2.conda
   sha256: 4cdd967f0a8197991ee730fd270f8b2e12bde85b4c794e4c76039291772c3bf0
   md5: 41bbccf460a688430fbd20a30a0af009
@@ -3059,7 +3059,8 @@ packages:
   - certifi
   license: BSD-3-Clause
   license_family: BSD
-  purls: []
+  purls:
+  - pkg:pypi/httpcore?source=hash-mapping
   size: 48959
   timestamp: 1731707562362
 - conda: https://conda.anaconda.org/conda-forge/noarch/httpx-0.28.1-pyhd8ed1ab_0.conda
