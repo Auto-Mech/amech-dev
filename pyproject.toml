@@ -28,6 +28,7 @@ test = { cmd = "./scripts/test.py" }
 subtasks = { cmd = "./scripts/subtasks.sh" }
 node = { cmd = "./scripts/node.sh" }
 x2z = { cmd = "./scripts/x2z.py" }
+lint = { cmd = "./scripts/lint.sh", cwd = "." }
 
 [tool.pixi.dependencies]
 python = "3.11.*"
@@ -129,3 +130,6 @@ check_untyped_defs = true
 show_error_codes = true
 follow_imports = "skip"
 ignore_errors = true
+
+[dependency-groups]
+proto = ["pyvis>=0.3.2,<0.4", "recursive-diff>=1.2.0,<2"]

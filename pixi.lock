@@ -1282,6 +1282,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/ff/62/85c4c919272577931d407be5ba5d71c20f0b616d31a0befe0ae45bb79abd/imagesize-1.4.1-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/2c/e1/e6716421ea10d38022b952c159d5161ca1193197fb744506875fbb87ea7b/iniconfig-2.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c1/11/114d0a5f4dabbdcedc1125dee0888514c3c3b16d3e9facad87ed96fad97c/isort-6.0.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/0e/b5/8d90bb4951a1e821d0b4e559edb3c70918b8954b566c7eb9211846a48c47/jsonpickle-4.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/42/d7/1ec15b46af6af88f19b8e5ffea08fa375d433c998b8a7639e76935c14f1f/markdown_it_py-3.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/27/1a/1f68f9ba0c207934b35b86a8ca3aad8395a3d6dd7921c0686e23853ff5a9/mccabe-0.7.0-py2.py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/a7/f7/7782a043553ee469c1ff49cfa1cdace2d6bf99a1f333cf38676b3ddf30da/mdit_py_plugins-0.4.2-py3-none-any.whl
@@ -1297,6 +1298,8 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/e8/83/bff755d09e31b5d25cc7fdc4bf3915d1a404e181f1abf0359af376845c24/pylint-3.3.7-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/30/3d/64ad57c803f1fa1e963a7946b6e0fea4a70df53c1a7fed304586539c2bac/pytest-8.3.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/6d/82/1d96bf03ee4c0fdc3c0cbe61470070e659ca78dc0086fb88b66c185e2449/pytest_xdist-3.6.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/ab/4b/e37e4e5d5ee1179694917b445768bdbfb084f5a59ecd38089d3413d4c70f/pyvis-0.3.2-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/4c/89/7830fd05d17535a6e194199d30c07fe37d686d8d089b9444321c97de37be/recursive_diff-1.2.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/53/97/d2cbbaa10c9b826af0e10fdf836e1bf344d9f0abb873ebc34d1f49642d3f/roman_numerals_py-3.1.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/62/b3/a63b4e91850e3f47f78795e6630ee9266cb6963de8f0191600289c2bb8f4/ruff-0.11.10-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/c8/78/3565d011c61f5a43488987ee32b6f3f656e7f107ac2782dd57bdd7d91d9a/snowballstemmer-3.0.1-py3-none-any.whl
@@ -1762,7 +1765,7 @@ packages:
 - pypi: ./
   name: automech
   version: 0.1.0
-  sha256: c928efe47b56ae384aac72a48b4fe73b77805a6c35679d9261b69ef20503e20c
+  sha256: 4c680148d14dc34ea615e17e162ab06fb4554753d549aee7d1eb7660eb1d8623
   requires_dist:
   - pip
   - pylint
@@ -4651,6 +4654,43 @@ packages:
   - pkg:pypi/json5?source=hash-mapping
   size: 34114
   timestamp: 1743722170015
+- pypi: https://files.pythonhosted.org/packages/0e/b5/8d90bb4951a1e821d0b4e559edb3c70918b8954b566c7eb9211846a48c47/jsonpickle-4.1.0-py3-none-any.whl
+  name: jsonpickle
+  version: 4.1.0
+  sha256: 763f837a0b2586b45424d9a07108a798d9feac52f3a152606336f7f9e1a22ffa
+  requires_dist:
+  - pytest-cov ; extra == 'cov'
+  - black ; extra == 'dev'
+  - pyupgrade ; extra == 'dev'
+  - furo ; extra == 'docs'
+  - rst-linker>=1.9 ; extra == 'docs'
+  - sphinx>=3.5 ; extra == 'docs'
+  - build ; extra == 'packaging'
+  - setuptools>=61.2 ; extra == 'packaging'
+  - setuptools-scm[toml]>=6.0 ; extra == 'packaging'
+  - twine ; extra == 'packaging'
+  - pytest>=6.0,!=8.1.* ; extra == 'testing'
+  - pytest-benchmark ; extra == 'testing'
+  - pytest-benchmark[histogram] ; extra == 'testing'
+  - pytest-checkdocs>=1.2.3 ; extra == 'testing'
+  - pytest-enabler>=1.0.1 ; extra == 'testing'
+  - pytest-ruff>=0.2.1 ; extra == 'testing'
+  - bson ; extra == 'testing'
+  - ecdsa ; extra == 'testing'
+  - feedparser ; extra == 'testing'
+  - gmpy2 ; extra == 'testing'
+  - numpy ; extra == 'testing'
+  - pandas ; extra == 'testing'
+  - pymongo ; extra == 'testing'
+  - pyyaml ; extra == 'testing'
+  - scikit-learn ; extra == 'testing'
+  - simplejson ; extra == 'testing'
+  - sqlalchemy ; extra == 'testing'
+  - ujson ; extra == 'testing'
+  - atheris~=2.3.0 ; python_full_version < '3.12' and extra == 'testing'
+  - scipy ; python_full_version < '3.11' and extra == 'testing'
+  - scipy>=1.9.3 ; python_full_version >= '3.11' and extra == 'testing'
+  requires_python: '>=3.8'
 - conda: https://conda.anaconda.org/conda-forge/linux-64/jsonpointer-3.0.0-py311h38be061_1.conda
   sha256: 2f082f7b12a7c6824e051321c1029452562ad6d496ad2e8c8b7b3dea1c8feb92
   md5: 5ca76f61b00a15a9be0612d4d883badc
@@ -10564,6 +10604,16 @@ packages:
   - pkg:pypi/pytz?source=hash-mapping
   size: 189015
   timestamp: 1742920947249
+- pypi: https://files.pythonhosted.org/packages/ab/4b/e37e4e5d5ee1179694917b445768bdbfb084f5a59ecd38089d3413d4c70f/pyvis-0.3.2-py3-none-any.whl
+  name: pyvis
+  version: 0.3.2
+  sha256: 5720c4ca8161dc5d9ab352015723abb7a8bb8fb443edeb07f7a322db34a97555
+  requires_dist:
+  - ipython>=5.3.0
+  - jinja2>=2.9.6
+  - jsonpickle>=1.4.1
+  - networkx>=1.11
+  requires_python: '>3.6'
 - conda: https://conda.anaconda.org/conda-forge/linux-64/pyyaml-6.0.2-py311h2dc5d0c_2.conda
   sha256: d107ad62ed5c62764fba9400f2c423d89adf917d687c7f2e56c3bfed605fb5b3
   md5: 014417753f948da1f70d132b2de573be
@@ -10998,6 +11048,15 @@ packages:
   purls: []
   size: 282480
   timestamp: 1740379431762
+- pypi: https://files.pythonhosted.org/packages/4c/89/7830fd05d17535a6e194199d30c07fe37d686d8d089b9444321c97de37be/recursive_diff-1.2.0-py3-none-any.whl
+  name: recursive-diff
+  version: 1.2.0
+  sha256: d60ed7c93fcd52d057600fe3c410c40b3f58e0426055396fe19bbbcd3af02db4
+  requires_dist:
+  - numpy>=1.16
+  - pandas>=0.25
+  - xarray>=0.12
+  requires_python: '>=3.8'
 - conda: https://conda.anaconda.org/conda-forge/noarch/referencing-0.36.1-pyhd8ed1ab_0.conda
   sha256: 55a8c68d75bc70624be9dbd5550d2de0fae295363fb836860a4a5d244a5b088a
   md5: dbb48421efd666ea133c6d5e67291766
