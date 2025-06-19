@@ -1,11 +1,13 @@
 # AutoMech Developer Set-up
 
-This repository provides instructions for installing and running AutoMech from source,
-as a developer.
+**This repository is deprecated and will not continue to be updated. Please see the README on the [Auto-Mech GitHub page](https://github.com/Auto-Mech) for updated installation instructions.**
 
-If you are a brand new AutoMech developer, start by following the instructions in
+~~This repository provides instructions for installing and running AutoMech from source,
+as a developer.~~
+
+~~If you are a brand new AutoMech developer, start by following the instructions in
 [Appendix A](#appendix-a-new-automech-developers-start-here) to fork the AutoMech
-repositories.
+repositories.~~
 
 ## Install
 

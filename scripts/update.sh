@@ -11,7 +11,7 @@
 #   - Flags to add to the push command, e.g. --force (default: none)
 
 set -e  # if any command fails, quit
-REPOS=("autochem" "autoio" "autofile" "mechanalyzer" "mechdriver")
+REPOS=("autochem" "autoio" "autofile" "mechanalyzer")
 DIR=$( dirname -- $( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd ))
 
 # 0. Read arguments
